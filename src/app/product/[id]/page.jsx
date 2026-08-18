@@ -310,13 +310,20 @@ export default function ProductDetailPage() {
           gap: 10px;
         }
         .size-btn {
-          width: 45px;
-          height: 45px;
-          border: 1px solid #ddd;
+          min-width: 45px;
+          height: auto;
+          min-height: 42px;
+          padding: 8px 16px;
+          border: 1px solid var(--line, #ddd);
           background: white;
-          border-radius: 8px;
+          border-radius: 10px;
           cursor: pointer;
           font-weight: 600;
+          font-size: 0.9rem;
+          white-space: nowrap;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
           transition: all 0.2s ease;
         }
         .size-btn:hover, .size-btn:active, .size-btn:focus, .size-btn.active {
