@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="500" height="120">
+  <defs>
+    <!-- Shadow for Depth -->
+    <filter id="logoShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- LOGO MARK / ICON -->
+  <g transform="translate(10, 10)" filter="url(#logoShadow)">
+    <!-- Category Block 1: Apparel (Deep Teal) -->
+    <path d="M 20 20 L 45 20 A 5 5 0 0 1 50 25 L 50 50 L 25 50 A 5 5 0 0 1 20 45 Z" fill="#1C5C53"/>
+    
+    <!-- Category Block 2: Art & Craft (Dark Teal Accent) -->
+    <path d="M 55 20 L 80 20 A 5 5 0 0 1 85 25 L 85 45 A 5 5 0 0 1 80 50 L 55 50 Z" fill="#134943"/>
+    
+    <!-- Category Block 3: Toys & Games (Neutral Gray) -->
+    <path d="M 20 55 L 45 55 L 50 55 L 50 75 A 5 5 0 0 1 45 80 L 25 80 A 5 5 0 0 1 20 75 Z" fill="#6B6F6E"/>
+    
+    <!-- Category Block 4: Garden & Outdoor (Light Teal Accent) -->
+    <path d="M 55 55 L 80 55 A 5 5 0 0 1 85 60 L 85 75 A 5 5 0 0 1 80 80 L 55 80 Z" fill="#2A8377"/>
+
+    <!-- Central Interlocking Core Element (Cream & Ink) -->
+    <circle cx="52.5" cy="52.5" r="7.5" fill="#FBFAF8"/>
+    <circle cx="52.5" cy="52.5" r="4" fill="#1C1C1C"/>
+  </g>
+
+  <!-- TYPOGRAPHY -->
+  <!-- Brand Name: ASSEMBLE -->
+  <text x="115" y="62" 
+        font-family="'Poppins', system-ui, -apple-system, sans-serif" 
+        font-size="38" 
+        font-weight="700" 
+        letter-spacing="1.5" 
+        fill="#1C1C1C">
+    ASSEMBLE
+  </text>
+
+  <!-- Sub-heading: DISTRIBUTION -->
+  <text x="117" y="85" 
+        font-family="'Poppins', system-ui, -apple-system, sans-serif" 
+        font-size="14" 
+        font-weight="600" 
+        letter-spacing="6" 
+        fill="#1C5C53">
+    DISTRIBUTION
+  </text>
+  
+  <!-- Accent Line matched with --line and --teal -->
+  <rect x="117" y="93" width="225" height="2" fill="#E7E5E0" rx="1"/>
+  <rect x="117" y="93" width="50" height="2" fill="#1C5C53" rx="1"/>
+</svg>
