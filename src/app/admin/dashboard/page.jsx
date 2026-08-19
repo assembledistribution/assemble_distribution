@@ -1075,18 +1075,20 @@ function DashboardContent() {
                       <button
                         type="button"
                         onClick={handleAddCustomUrl}
+                        disabled={uploading}
                         style={{
                           padding: '10px 18px',
                           borderRadius: '10px',
                           border: '1px solid var(--teal, #1C5C53)',
-                          backgroundColor: '#ffffff',
+                          backgroundColor: uploading ? 'var(--bg-neutral, #F4F3F0)' : '#ffffff',
                           color: 'var(--teal, #1C5C53)',
                           fontWeight: '700',
                           fontSize: '13px',
-                          cursor: 'pointer'
+                          cursor: uploading ? 'wait' : 'pointer',
+                          opacity: uploading ? 0.7 : 1
                         }}
                       >
-                        Add URL
+                        {uploading ? 'Importing...' : 'Add URL'}
                       </button>
                     </div>
                   </div>
@@ -1116,7 +1118,15 @@ function DashboardContent() {
                               }}
                             >
                               <div style={{ height: '110px', width: '100%', position: 'relative', overflow: 'hidden' }}>
-                                <img src={imgUrl || null} alt={`Product view ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <img 
+                                  src={imgUrl || null} 
+                                  alt={`Product view ${idx + 1}`} 
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&auto=format&fit=crop';
+                                  }}
+                                />
                                 {isMainCover && (
                                   <span style={{
                                     position: 'absolute',
