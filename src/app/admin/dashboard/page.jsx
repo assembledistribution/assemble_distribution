@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useProducts } from '@/context/ProductContext';
+import { getApiUrl } from '@/utils/api';
 import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { 
@@ -79,7 +80,7 @@ function DashboardContent() {
     setUploading(true);
 
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+      const apiBase = getApiUrl();
       const response = await fetch(`${apiBase}/upload/multiple`, {
         method: 'POST',
         body: formData,

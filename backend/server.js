@@ -25,11 +25,12 @@ const connectDB = async () => {
     return;
   }
   if (!process.env.MONGO_URI) {
-    console.warn('WARNING: MONGO_URI is not set in environment variables.');
-    return;
+    throw new Error('MONGO_URI environment variable is missing on Vercel.');
   }
   if (!connPromise) {
-    connPromise = mongoose.connect(process.env.MONGO_URI)
+    connPromise = mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000
+    })
       .then(async () => {
         isConnected = true;
         console.log('MongoDB Connected');
@@ -38,6 +39,7 @@ const connectDB = async () => {
       .catch((error) => {
         connPromise = null;
         console.error(`Error connecting to MongoDB: ${error.message}`);
+        throw error;
       });
   }
   await connPromise;
@@ -65,10 +67,21 @@ const seedAdmin = async () => {
 app.use(async (req, res, next) => {
   try {
     await connectDB();
+    if (mongoose.connection.readyState < 1) {
+      return res.status(500).json({
+        success: false,
+        message: 'Database Connection Error. Please verify MONGO_URI and MongoDB Atlas IP Access List (0.0.0.0/0).'
+      });
+    }
+    next();
   } catch (err) {
     console.error('Database connection middleware error:', err.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Database Connection Failed. Please check MONGO_URI environment variable and MongoDB Atlas IP access list.',
+      error: err.message
+    });
   }
-  next();
 });
 
 // Routes

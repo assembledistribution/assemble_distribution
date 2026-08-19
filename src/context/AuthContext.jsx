@@ -1,10 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getApiUrl } from '../utils/api';
 
 const AuthContext = createContext();
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -19,6 +18,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (password) => {
+    const API_URL = getApiUrl();
     try {
       const response = await fetch(`${API_URL}/admin/login`, {
         method: 'POST',
@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
         }
       }
     } catch (error) {
-      console.warn('Backend login connection issue. Using local security check.');
+      console.warn('Backend login connection issue. Using local security check.', error);
     }
 
     // Local fallback check if backend connection issue or offline

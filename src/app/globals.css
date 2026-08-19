@@ -1367,13 +1367,15 @@ button {
 }
 
 .el-wrapper:hover .price {
-  left: 20px;
-  transform: translateY(-50%);
-  color: #fff; /* Changed to white for better contrast against teal bg */
+  left: -50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
 }
 
 .el-wrapper:hover .add-to-cart {
   left: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%);
 }
 
 .el-wrapper:hover .img {
