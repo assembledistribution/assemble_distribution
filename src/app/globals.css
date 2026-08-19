@@ -1365,26 +1365,13 @@ button {
   border-radius: var(--radius-md);
   border: 1px solid var(--line);
   transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .el-wrapper:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.el-wrapper:hover .h-bg {
-  left: 0px;
-}
-
-.el-wrapper:hover .price {
-  left: -50%;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-}
-
-.el-wrapper:hover .add-to-cart {
-  left: 50%;
-  opacity: 1;
-  transform: translate(-50%, -50%);
 }
 
 .el-wrapper:hover .img {
@@ -1393,7 +1380,7 @@ button {
 
 .el-wrapper .box-down {
   width: 100%;
-  height: 60px;
+  height: 48px;
   position: relative;
   overflow: hidden;
   border-radius: 0 0 var(--radius-sm) var(--radius-sm);
