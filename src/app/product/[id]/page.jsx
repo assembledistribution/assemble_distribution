@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
-import { ArrowLeft, ShoppingCart, Truck, ShieldCheck, RefreshCw, Check } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Truck, ShieldCheck, RefreshCw, Check, Package } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -35,10 +35,11 @@ export default function ProductDetailPage() {
     return (
       <>
         <Navbar />
-        <div style={{ padding: '100px 20px', textAlign: 'center', minHeight: '60vh' }}>
-          <h2>Product Not Found</h2>
-          <p style={{ color: 'var(--gray)', margin: '20px 0' }}>The product you&apos;re looking for doesn&apos;t exist or has been removed.</p>
-          <button className="btn" onClick={() => router.push('/shop')}>Back to Shop</button>
+        <div style={{ padding: '120px 20px 80px', textAlign: 'center', minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Package size={56} style={{ color: 'var(--teal, #1C5C53)', marginBottom: '16px', opacity: 0.6 }} />
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--ink, #1C1C1C)', marginBottom: '10px' }}>Product Not Found</h2>
+          <p style={{ color: 'var(--gray, #666)', margin: '0 0 24px', maxWidth: '400px', lineHeight: 1.6 }}>The product you&apos;re looking for doesn&apos;t exist or has been removed from our catalog.</p>
+          <button className="btn-primary" style={{ padding: '12px 28px', borderRadius: '10px', cursor: 'pointer' }} onClick={() => router.push('/shop')}>Back to Shop</button>
         </div>
         <Footer />
       </>
@@ -96,41 +97,37 @@ export default function ProductDetailPage() {
   return (
     <>
       <Navbar />
-      <div className="product-detail-page section">
+      <div className="product-detail-page">
         <div className="container">
-          <button className="back-btn" onClick={() => router.back()}>
-            <ArrowLeft size={20} /> Back
+          {/* Top Breadcrumb Nav */}
+          <button className="back-btn" onClick={() => router.back()} aria-label="Go Back">
+            <ArrowLeft size={18} /> <span>Back</span>
           </button>
 
           <div className="product-detail-grid">
-            <div className="product-image-section" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {/* Left Image Showcase Column */}
+            <div className="product-image-section">
               <div className="product-image-container">
-                <img src={activeMainImage} alt={product.title || ''} className="product-main-image" />
+                <img 
+                  src={activeMainImage} 
+                  alt={product.title || 'Product Image'} 
+                  className="product-main-image" 
+                />
               </div>
 
+              {/* Thumbnails Gallery */}
               {productImages.length > 1 && (
-                <div className="product-gallery-thumbnails" style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '6px' }}>
+                <div className="product-gallery-thumbnails">
                   {productImages.map((imgUrl, idx) => {
                     const isSelected = activeMainImage === imgUrl;
                     return (
                       <button
                         key={idx}
                         onClick={() => setSelectedImage(imgUrl)}
-                        style={{
-                          width: '70px',
-                          height: '70px',
-                          borderRadius: '12px',
-                          overflow: 'hidden',
-                          border: isSelected ? '2px solid var(--teal)' : '1px solid var(--line)',
-                          padding: 0,
-                          background: 'var(--bg-neutral)',
-                          cursor: 'pointer',
-                          opacity: isSelected ? 1 : 0.7,
-                          transition: 'all 0.2s ease',
-                          flexShrink: 0
-                        }}
+                        className={`thumbnail-btn ${isSelected ? 'active' : ''}`}
+                        aria-label={`View image ${idx + 1}`}
                       >
-                        <img src={imgUrl || null} alt={`Thumbnail ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={imgUrl || null} alt={`Thumbnail ${idx + 1}`} />
                       </button>
                     );
                   })}
@@ -138,6 +135,7 @@ export default function ProductDetailPage() {
               )}
             </div>
 
+            {/* Right Product Details Column */}
             <div className="product-info-container">
               <div className="product-brand">{product.brand || 'Premium Quality'}</div>
               <h1 className="product-title-large">{product.title}</h1>
@@ -150,10 +148,11 @@ export default function ProductDetailPage() {
                 )}
               </div>
 
-              <div className="product-short-description" style={{ color: 'var(--gray, #6B6F6E)', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '24px' }}>
+              <div className="product-short-description">
                 {product.shortDescription || (product.description ? (product.description.length > 140 ? product.description.substring(0, 140) + '...' : product.description) : 'Premium quality craftsmanship with modern design.')}
               </div>
 
+              {/* Size Selector */}
               {hasSizes && (
                 <div className="product-options">
                   <h4 className="option-title">Select Size</h4>
@@ -174,6 +173,7 @@ export default function ProductDetailPage() {
                 </div>
               )}
 
+              {/* Variation Selector */}
               {hasVariations && (
                 <div className="product-options">
                   <h4 className="option-title">Select Variation / Color</h4>
@@ -194,10 +194,10 @@ export default function ProductDetailPage() {
                 </div>
               )}
 
+              {/* Add to Cart Actions */}
               <div className="product-actions">
                 <button
-                  className="btn-primary full-width cart-action-btn"
-                  style={added ? { background: '#10b981' } : {}}
+                  className={`cart-action-btn ${added ? 'added' : ''}`}
                   onClick={() => {
                     addToCart(product, selectedSize, selectedVariation, 1, activePrice);
                     setAdded(true);
@@ -205,218 +205,402 @@ export default function ProductDetailPage() {
                   }}
                 >
                   {added ? <Check size={20} /> : <ShoppingCart size={20} />}
-                  {added ? 'Added to Cart!' : 'Add to Cart'}
+                  <span>{added ? 'Added to Cart!' : 'Add to Cart'}</span>
                 </button>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="product-trust-badges">
+                <div className="badge-item">
+                  <Truck size={18} className="badge-icon" />
+                  <span>Fast Shipping</span>
+                </div>
+                <div className="badge-item">
+                  <ShieldCheck size={18} className="badge-icon" />
+                  <span>100% Guaranteed</span>
+                </div>
+                <div className="badge-item">
+                  <RefreshCw size={18} className="badge-icon" />
+                  <span>Easy Returns</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Description Section (Visible when scrolling down) */}
-          <div className="product-description-section" style={{ marginTop: '4rem', paddingTop: '3rem', borderTop: '1px solid var(--line, #E7E5E0)' }}>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--ink, #1C1C1C)', marginBottom: '1.2rem' }}>
-              Product Details & Description
-            </h3>
-            <div style={{ color: 'var(--gray, #4B5563)', lineHeight: '1.8', fontSize: '1.05rem', whiteSpace: 'pre-line' }}>
+          {/* Description Section */}
+          <div className="product-description-section">
+            <h3 className="section-title">Product Details & Description</h3>
+            <div className="description-content">
               {product.description || 'This is a premium quality product designed with attention to detail. Experience the best in class performance and style with this exclusive item.'}
             </div>
           </div>
         </div>
       </div>
       <Footer />
+
       <style dangerouslySetInnerHTML={{
         __html: `
         .product-detail-page {
-          padding-top: 100px;
-          min-height: 80vh;
+          padding-top: 110px;
+          padding-bottom: 60px;
+          min-height: 85vh;
+          background: #fafafa;
         }
+
         .back-btn {
-          background: none;
-          border: none;
-          color: var(--gray);
-          display: flex;
+          background: white;
+          border: 1px solid var(--line, #E5E7EB);
+          color: var(--gray, #4B5563);
+          display: inline-flex;
           align-items: center;
           gap: 8px;
           cursor: pointer;
-          font-size: 1rem;
-          margin-bottom: 2rem;
-          transition: color 0.3s ease;
+          font-size: 0.9rem;
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 20px;
+          margin-bottom: 1.5rem;
+          transition: all 0.2s ease;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         .back-btn:hover {
-          color: var(--ink);
+          color: var(--ink, #111);
+          border-color: var(--teal, #1C5C53);
+          background: #f3f4f6;
+          transform: translateX(-2px);
         }
+
         .product-detail-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 4rem;
+          grid-template-columns: 1.1fr 1fr;
+          gap: 3.5rem;
           align-items: start;
         }
+
+        .product-image-section {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          position: sticky;
+          top: 110px;
+        }
+
         .product-image-container {
-          background: var(--bg-neutral);
+          background: white;
           border-radius: 20px;
+          border: 1px solid var(--line, #E5E7EB);
           overflow: hidden;
           padding: 2rem;
           display: flex;
           align-items: center;
           justify-content: center;
+          aspect-ratio: 1 / 1;
+          max-height: 480px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.03);
         }
+
         .product-main-image {
           width: 100%;
-          max-width: 500px;
-          height: auto;
+          height: 100%;
           object-fit: contain;
-          mix-blend-mode: multiply;
+          transition: opacity 0.2s ease;
         }
+
+        .product-gallery-thumbnails {
+          display: flex;
+          gap: 12px;
+          overflow-x: auto;
+          padding-bottom: 6px;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .product-gallery-thumbnails::-webkit-scrollbar {
+          display: none;
+        }
+
+        .thumbnail-btn {
+          width: 70px;
+          height: 70px;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 2px solid var(--line, #E5E7EB);
+          padding: 2px;
+          background: white;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: all 0.2s ease;
+          flex-shrink: 0;
+        }
+        .thumbnail-btn:hover {
+          opacity: 1;
+        }
+        .thumbnail-btn.active {
+          border-color: var(--teal, #1C5C53);
+          opacity: 1;
+          box-shadow: 0 0 0 2px rgba(28, 92, 83, 0.2);
+        }
+        .thumbnail-btn img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 8px;
+        }
+
+        .product-info-container {
+          background: white;
+          padding: 2.2rem;
+          border-radius: 20px;
+          border: 1px solid var(--line, #E5E7EB);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+        }
+
         .product-brand {
           text-transform: uppercase;
-          letter-spacing: 2px;
-          color: var(--teal);
-          font-weight: 600;
-          font-size: 0.9rem;
-          margin-bottom: 10px;
-        }
-        .product-title-large {
-          font-size: 2.2rem;
+          letter-spacing: 1.5px;
+          color: var(--teal, #1C5C53);
           font-weight: 700;
+          font-size: 0.825rem;
           margin-bottom: 8px;
+        }
+
+        .product-title-large {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 12px;
           line-height: 1.25;
-          color: var(--ink);
+          color: var(--ink, #1C1C1C);
           overflow-wrap: break-word;
           word-break: break-word;
         }
+
         .product-price-large {
-          font-size: 1.6rem;
-          font-weight: 500;
-          margin-bottom: 25px;
+          font-size: 1.75rem;
+          font-weight: 700;
+          margin-bottom: 18px;
           color: var(--teal, #1C5C53);
         }
-        .product-description {
-          color: var(--gray);
-          line-height: 1.8;
-          margin-bottom: 30px;
-          font-size: 1.05rem;
-          overflow-wrap: break-word;
-          word-break: break-word;
+
+        .product-short-description {
+          color: var(--gray, #4B5563);
+          font-size: 0.95rem;
+          line-height: 1.6;
+          margin-bottom: 24px;
+          padding-bottom: 20px;
+          border-bottom: 1px solid var(--line, #F3F4F6);
         }
+
         .product-options {
-          margin-bottom: 30px;
+          margin-bottom: 24px;
         }
+
         .option-title {
-          margin-bottom: 12px;
+          margin-bottom: 10px;
           font-weight: 600;
+          font-size: 0.9rem;
+          color: var(--ink, #111);
         }
-        .size-selector {
+
+        .size-selector, .variation-selector {
           display: flex;
           flex-wrap: wrap;
           gap: 10px;
         }
-        .size-btn {
-          min-width: 45px;
-          height: auto;
-          min-height: 42px;
+
+        .size-btn, .variation-btn {
+          min-width: 48px;
+          min-height: 44px;
           padding: 8px 16px;
-          border: 1px solid var(--line, #ddd);
+          border: 1.5px solid var(--line, #E5E7EB);
           background: white;
+          color: var(--ink, #374151);
           border-radius: 10px;
           cursor: pointer;
           font-weight: 600;
           font-size: 0.9rem;
-          white-space: nowrap;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           transition: all 0.2s ease;
         }
-        .size-btn:hover, .size-btn:active, .size-btn:focus, .size-btn.active {
-          border-color: var(--teal);
-          background: var(--teal);
+        .size-btn:hover, .variation-btn:hover {
+          border-color: var(--teal, #1C5C53);
+          color: var(--teal, #1C5C53);
+          background: #f0fdf4;
+        }
+        .size-btn.active, .variation-btn.active {
+          border-color: var(--teal, #1C5C53);
+          background: var(--teal, #1C5C53);
           color: white;
+          box-shadow: 0 4px 10px rgba(28, 92, 83, 0.25);
         }
-        .variation-selector {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-        }
-        .variation-btn {
-          padding: 10px 16px;
-          border: 1px solid #ddd;
-          background: white;
-          border-radius: 8px;
-          cursor: pointer;
-          font-weight: 500;
-          transition: all 0.2s ease;
-        }
-        .variation-btn:hover, .variation-btn:active, .variation-btn:focus, .variation-btn.active {
-          border-color: var(--teal);
-          color: var(--teal);
-          background: var(--bg-neutral);
-        }
+
         .product-actions {
-          margin-bottom: 40px;
+          margin-top: 28px;
+          margin-bottom: 24px;
         }
+
         .cart-action-btn {
+          width: 100%;
+          min-height: 52px;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          padding: 18px;
-          font-size: 1.1rem;
-          background: var(--teal);
+          padding: 14px 24px;
+          font-size: 1.05rem;
+          font-weight: 600;
+          background: var(--teal, #1C5C53);
           color: white;
           border: none;
           border-radius: 12px;
           cursor: pointer;
-          transition: transform 0.2s, box-shadow 0.2s;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 14px rgba(28, 92, 83, 0.3);
         }
         .cart-action-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+          box-shadow: 0 6px 20px rgba(28, 92, 83, 0.4);
+          background: #154740;
         }
-        .full-width {
-          width: 100%;
+        .cart-action-btn.added {
+          background: #10b981;
+          box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
         }
-        .product-features {
-          border-top: 1px solid #eee;
-          padding-top: 30px;
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
-        }
-        .feature-item {
+
+        .product-trust-badges {
           display: flex;
           align-items: center;
+          justify-content: space-between;
+          padding-top: 20px;
+          border-top: 1px solid var(--line, #F3F4F6);
           gap: 12px;
-          color: var(--gray);
+          flex-wrap: wrap;
         }
+        .badge-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 0.85rem;
+          color: var(--gray, #6B7280);
+          font-weight: 500;
+        }
+        .badge-icon {
+          color: var(--teal, #1C5C53);
+          flex-shrink: 0;
+        }
+
+        .product-description-section {
+          margin-top: 3.5rem;
+          padding: 2.5rem;
+          background: white;
+          border-radius: 20px;
+          border: 1px solid var(--line, #E5E7EB);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+        }
+        .section-title {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: var(--ink, #1C1C1C);
+          margin-bottom: 1rem;
+        }
+        .description-content {
+          color: var(--gray, #4B5563);
+          line-height: 1.8;
+          font-size: 1rem;
+          white-space: pre-line;
+        }
+
+        /* --- Responsive Breakpoints --- */
+
         @media (max-width: 1024px) {
           .product-detail-grid {
             gap: 2rem;
           }
+          .product-image-section {
+            position: static;
+          }
+          .product-info-container {
+            padding: 1.8rem;
+          }
         }
+
         @media (max-width: 768px) {
+          .product-detail-page {
+            padding-top: 90px;
+            padding-bottom: 40px;
+          }
           .product-detail-grid {
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
           }
           .product-image-container {
-            padding: 1.5rem;
+            max-height: 380px;
+            padding: 1.25rem;
+          }
+          .product-info-container {
+            padding: 1.4rem;
+            border-radius: 16px;
           }
           .product-title-large {
-            font-size: 2rem;
+            font-size: 1.6rem;
           }
           .product-price-large {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
+            margin-bottom: 14px;
+          }
+          .thumbnail-btn {
+            width: 60px;
+            height: 60px;
+          }
+          .product-description-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 16px;
+          }
+          .section-title {
+            font-size: 1.25rem;
           }
         }
+
         @media (max-width: 480px) {
-          .product-title-large {
-            font-size: 1.7rem;
+          .product-detail-page {
+            padding-top: 82px;
           }
-          .product-main-image {
-            max-width: 100%;
+          .back-btn {
+            margin-bottom: 1rem;
+          }
+          .product-image-container {
+            max-height: 320px;
+            padding: 1rem;
+            border-radius: 16px;
+          }
+          .product-info-container {
+            padding: 1.2rem;
+          }
+          .product-title-large {
+            font-size: 1.35rem;
+          }
+          .product-price-large {
+            font-size: 1.35rem;
+          }
+          .size-btn, .variation-btn {
+            min-height: 42px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
           }
           .cart-action-btn {
-            padding: 16px;
-            font-size: 1rem;
+            min-height: 48px;
+            font-size: 0.975rem;
+            padding: 12px 18px;
+          }
+          .product-trust-badges {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+          .product-description-section {
+            padding: 1.2rem;
           }
         }
       `}} />
