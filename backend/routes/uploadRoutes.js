@@ -43,6 +43,7 @@ router.post('/', upload.single('image'), async (req, res) => {
       {
         folder: 'products',
         resource_type: 'auto',
+        quality: 'auto:best',
       },
       (error, result) => {
         if (error) {
@@ -79,6 +80,7 @@ router.post('/multiple', upload.array('images', 10), async (req, res) => {
           {
             folder: 'products',
             resource_type: 'auto',
+            quality: 'auto:best',
           },
           (error, result) => {
             if (error) reject(error);

@@ -1,9 +1,24 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getApiUrl } from '../utils/api';
+import { getApiUrl, getHighResImageUrl } from '../utils/api';
 
 const ProductContext = createContext();
+
+const formatProductHd = (p) => {
+  if (!p) return p;
+  const imageUrl = getHighResImageUrl(p.imageUrl);
+  const images = Array.isArray(p.images) && p.images.length > 0 
+    ? p.images.map(getHighResImageUrl) 
+    : (imageUrl ? [imageUrl] : []);
+
+  return {
+    ...p,
+    id: p._id || p.id,
+    imageUrl,
+    images
+  };
+};
 
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
@@ -14,7 +29,6 @@ export function ProductProvider({ children }) {
     setLoading(true);
     try {
       const API_URL = getApiUrl();
-      // Use cache: 'no-store' to guarantee fresh data on every fetch
       const response = await fetch(`${API_URL}/products?_t=${Date.now()}`, {
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -26,7 +40,7 @@ export function ProductProvider({ children }) {
       if (response.ok) {
         const data = await response.json();
         if (Array.isArray(data)) {
-          const mappedData = data.map(p => ({ ...p, id: p._id || p.id }));
+          const mappedData = data.map(formatProductHd);
           setProducts(mappedData);
           return mappedData;
         }
@@ -44,20 +58,20 @@ export function ProductProvider({ children }) {
 
   const addProduct = async (product) => {
     const API_URL = getApiUrl();
+    const formattedPayload = formatProductHd(product);
     try {
       const response = await fetch(`${API_URL}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify(formattedPayload),
       });
 
       if (response.ok) {
         const newProduct = await response.json();
-        const formatted = { ...newProduct, id: newProduct._id || newProduct.id };
+        const formatted = formatProductHd(newProduct);
         
-        // Refresh products list directly from MongoDB
         await fetchProducts();
         return { success: true, product: formatted };
       } else {
@@ -92,18 +106,19 @@ export function ProductProvider({ children }) {
 
   const updateProduct = async (id, updatedData) => {
     const API_URL = getApiUrl();
+    const formattedPayload = formatProductHd(updatedData);
     try {
       const response = await fetch(`${API_URL}/products/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(formattedPayload),
       });
 
       if (response.ok) {
         const updatedProduct = await response.json();
-        const formatted = { ...updatedProduct, id: updatedProduct._id || updatedProduct.id };
+        const formatted = formatProductHd(updatedProduct);
         await fetchProducts();
         return { success: true, product: formatted };
       } else {
