@@ -7,7 +7,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
-import { ArrowLeft, ShoppingCart, Truck, ShieldCheck, RefreshCw, Check, Package, Loader2 } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Truck, Check, Package, Loader2 } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -243,14 +243,6 @@ export default function ProductDetailPage() {
                 <div className="badge-item">
                   <Truck size={18} className="badge-icon" />
                   <span>Fast Shipping</span>
-                </div>
-                <div className="badge-item">
-                  <ShieldCheck size={18} className="badge-icon" />
-                  <span>100% Guaranteed</span>
-                </div>
-                <div className="badge-item">
-                  <RefreshCw size={18} className="badge-icon" />
-                  <span>Easy Returns</span>
                 </div>
               </div>
             </div>
