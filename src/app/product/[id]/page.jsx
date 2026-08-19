@@ -353,6 +353,8 @@ export default function ProductDetailPage() {
           border-radius: 20px;
           border: 1px solid var(--line, #E5E7EB);
           box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+          max-width: 100%;
+          overflow: hidden;
         }
 
         .product-brand {
@@ -362,6 +364,8 @@ export default function ProductDetailPage() {
           font-weight: 700;
           font-size: 0.825rem;
           margin-bottom: 8px;
+          overflow-wrap: anywhere;
+          word-break: break-word;
         }
 
         .product-title-large {
@@ -370,8 +374,9 @@ export default function ProductDetailPage() {
           margin-bottom: 12px;
           line-height: 1.25;
           color: var(--ink, #1C1C1C);
-          overflow-wrap: break-word;
+          overflow-wrap: anywhere;
           word-break: break-word;
+          max-width: 100%;
         }
 
         .product-price-large {
@@ -388,6 +393,9 @@ export default function ProductDetailPage() {
           margin-bottom: 24px;
           padding-bottom: 20px;
           border-bottom: 1px solid var(--line, #F3F4F6);
+          overflow-wrap: anywhere;
+          word-break: break-word;
+          max-width: 100%;
         }
 
         .product-options {
@@ -497,18 +505,26 @@ export default function ProductDetailPage() {
           border-radius: 20px;
           border: 1px solid var(--line, #E5E7EB);
           box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+          max-width: 100%;
+          overflow: hidden;
         }
         .section-title {
           font-size: 1.4rem;
           font-weight: 700;
           color: var(--ink, #1C1C1C);
           margin-bottom: 1rem;
+          overflow-wrap: anywhere;
+          word-break: break-word;
         }
         .description-content {
           color: var(--gray, #4B5563);
           line-height: 1.8;
           font-size: 1rem;
-          white-space: pre-line;
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          word-break: break-word;
+          word-wrap: break-word;
+          max-width: 100%;
         }
 
         /* --- Responsive Breakpoints --- */
