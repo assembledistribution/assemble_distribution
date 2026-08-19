@@ -29,11 +29,13 @@ const connectDB = async () => {
   }
   if (!connPromise) {
     connPromise = mongoose.connect(process.env.MONGO_URI, {
-      serverSelectionTimeoutMS: 5000
+      serverSelectionTimeoutMS: 10000,
+      maxPoolSize: 10,
+      socketTimeoutMS: 45000
     })
       .then(async () => {
         isConnected = true;
-        console.log('MongoDB Connected');
+        console.log('MongoDB Connected Successfully');
         await seedAdmin();
       })
       .catch((error) => {

@@ -8,32 +8,21 @@ const ProductContext = createContext();
 export function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [hasInitialized, setHasInitialized] = useState(false);
 
-  // Initialize products from localStorage on mount (client-only fallback)
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('designpro_demo_products');
-      if (saved) {
-        setProducts(JSON.parse(saved));
-      }
-    } catch (e) { /* ignore corrupted data */ }
-    setHasInitialized(true);
-  }, []);
-
-  // Sync to local demo storage for offline resilience
-  useEffect(() => {
-    if (hasInitialized && products.length > 0) {
-      localStorage.setItem('designpro_demo_products', JSON.stringify(products));
-    }
-  }, [products, hasInitialized]);
-
-  // Fetch products from backend
+  // Fetch products from backend (MongoDB Atlas) - Single Source of Truth
   const fetchProducts = async () => {
     setLoading(true);
     try {
       const API_URL = getApiUrl();
-      const response = await fetch(`${API_URL}/products`);
+      // Use cache: 'no-store' to guarantee fresh data on every fetch
+      const response = await fetch(`${API_URL}/products?_t=${Date.now()}`, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        },
+        cache: 'no-store'
+      });
+      
       if (response.ok) {
         const data = await response.json();
         if (Array.isArray(data)) {
@@ -43,7 +32,7 @@ export function ProductProvider({ children }) {
         }
       }
     } catch (error) {
-      console.error('Error fetching products from backend:', error);
+      console.error('Error fetching products from MongoDB backend:', error);
     } finally {
       setLoading(false);
     }
@@ -63,23 +52,22 @@ export function ProductProvider({ children }) {
         },
         body: JSON.stringify(product),
       });
+
       if (response.ok) {
         const newProduct = await response.json();
         const formatted = { ...newProduct, id: newProduct._id || newProduct.id };
-        setProducts(prev => [...prev.filter(p => p.id !== formatted.id), formatted]);
+        
+        // Refresh products list directly from MongoDB
+        await fetchProducts();
         return { success: true, product: formatted };
       } else {
         const errData = await response.json().catch(() => ({}));
         console.warn('Backend failed to add product:', errData);
-        const fallback = { ...product, id: Date.now().toString() };
-        setProducts(prev => [...prev, fallback]);
-        return { success: false, error: errData.message || 'Server error', product: fallback };
+        return { success: false, error: errData.message || 'Server error saving product to MongoDB' };
       }
     } catch (error) {
       console.error('Error adding product:', error);
-      const fallback = { ...product, id: Date.now().toString() };
-      setProducts(prev => [...prev, fallback]);
-      return { success: false, error: error.message, product: fallback };
+      return { success: false, error: error.message };
     }
   };
 
@@ -91,15 +79,14 @@ export function ProductProvider({ children }) {
       });
       if (response.ok) {
         setProducts(prev => prev.filter(p => p.id !== id && p._id !== id));
+        await fetchProducts();
         return { success: true };
       } else {
-        setProducts(prev => prev.filter(p => p.id !== id && p._id !== id));
-        return { success: true };
+        return { success: false };
       }
     } catch (error) {
       console.error('Error deleting product:', error);
-      setProducts(prev => prev.filter(p => p.id !== id && p._id !== id));
-      return { success: true };
+      return { success: false };
     }
   };
 
@@ -113,18 +100,17 @@ export function ProductProvider({ children }) {
         },
         body: JSON.stringify(updatedData),
       });
+
       if (response.ok) {
         const updatedProduct = await response.json();
         const formatted = { ...updatedProduct, id: updatedProduct._id || updatedProduct.id };
-        setProducts(prev => prev.map(p => (p.id === id || p._id === id) ? formatted : p));
+        await fetchProducts();
         return { success: true, product: formatted };
       } else {
-        setProducts(prev => prev.map(p => (p.id === id || p._id === id) ? { ...updatedData, id } : p));
         return { success: false };
       }
     } catch (error) {
       console.error('Error updating product:', error);
-      setProducts(prev => prev.map(p => (p.id === id || p._id === id) ? { ...updatedData, id } : p));
       return { success: false };
     }
   };

@@ -243,7 +243,7 @@ function DashboardContent() {
     setActiveTab('products');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (!newProduct.title || newProduct.title.trim() === '') {
@@ -280,12 +280,20 @@ function DashboardContent() {
       };
 
       if (editingId) {
-        updateProduct(editingId, productData);
+        const result = await updateProduct(editingId, productData);
         setEditingId(null);
-        showNotification('Product updated successfully!');
+        if (result?.success) {
+          showNotification('Product updated & synced with MongoDB!');
+        } else {
+          showNotification('Warning: Failed to update product in MongoDB database', 'error');
+        }
       } else {
-        addProduct(productData);
-        showNotification('New product published successfully!');
+        const result = await addProduct(productData);
+        if (result?.success) {
+          showNotification('New product published & saved to MongoDB!');
+        } else {
+          showNotification('Warning: Failed to save product to MongoDB database: ' + (result?.error || 'Database Error'), 'error');
+        }
       }
       
       setNewProduct({
