@@ -1374,6 +1374,22 @@ button {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
+.el-wrapper:hover .h-bg {
+  left: 0px;
+}
+
+.el-wrapper:hover .price {
+  left: -50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.el-wrapper:hover .add-to-cart {
+  left: 50%;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
 .el-wrapper:hover .img {
   transform: scale(1.05);
 }

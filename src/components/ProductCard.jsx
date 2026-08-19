@@ -45,6 +45,7 @@ export default function ProductCard({ product }) {
   }
 
   const highResImage = getHighResImageUrl(product.imageUrl);
+  const actionText = (product.hasSizes || hasVariations) ? 'Select Options' : 'Add to Cart';
 
   return (
     <div className="el-wrapper">
@@ -94,8 +95,12 @@ export default function ProductCard({ product }) {
       </div>
 
       <div className="box-down">
+        <div className="h-bg">
+          <div className="h-bg-inner"></div>
+        </div>
+
         <button 
-          className="cart-btn-action" 
+          className="cart" 
           onClick={(e) => {
             e.preventDefault();
             if (product.hasSizes || hasVariations) {
@@ -105,44 +110,15 @@ export default function ProductCard({ product }) {
             }
           }}
         >
-          <ShoppingCart size={16} />
-          <span>{(product.hasSizes || hasVariations) ? 'Select Options' : 'Add to Cart'}</span>
+          <span className="price">{actionText}</span>
+          <span className="add-to-cart">
+            <span className="txt">
+              <ShoppingCart size={15} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+              {actionText}
+            </span>
+          </span>
         </button>
       </div>
-
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .el-wrapper {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 100%;
-        }
-        .card-body {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-        .cart-btn-action {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          background: var(--teal, #1C5C53);
-          color: white;
-          border: none;
-          font-weight: 600;
-          font-size: 0.9rem;
-          cursor: pointer;
-          transition: background 0.2s ease;
-        }
-        .cart-btn-action:hover {
-          background: var(--teal-dark, #134943);
-        }
-      `}} />
     </div>
   );
 }
