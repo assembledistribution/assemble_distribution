@@ -63,7 +63,15 @@ const seedAdmin = async () => {
   }
 };
 
-// Middleware to ensure DB is connected for incoming API requests
+// Upload Route (does not require MongoDB connection)
+app.use('/api/upload', uploadRoutes);
+
+// Root route
+app.get('/', (req, res) => {
+  res.send('API is running on Vercel Serverless...');
+});
+
+// Middleware to ensure DB is connected for incoming API requests (products, admin)
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -84,10 +92,9 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Routes
+// Database Routes
 app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/upload', uploadRoutes);
 
 // Root route
 app.get('/', (req, res) => {

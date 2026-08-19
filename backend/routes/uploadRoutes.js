@@ -24,11 +24,11 @@ const upload = multer({
   }
 });
 
-// Configure Cloudinary
+// Configure Cloudinary with fallback keys
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'tzecnljs',
+  api_key: process.env.CLOUDINARY_API_KEY || '635369365953596',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'gNvk4Frwk2SPBCV7vwdL9HySrj8'
 });
 
 // Upload single image endpoint
