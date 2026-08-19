@@ -1,6 +1,41 @@
 import Product from '../models/Product.js';
 import { v2 as cloudinary } from 'cloudinary';
 
+// Configure Cloudinary fallback credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'tzecnljs',
+  api_key: process.env.CLOUDINARY_API_KEY || '635369365953596',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'gNvk4Frwk2SPBCV7vwdL9HySrj8'
+});
+
+// Helper to auto-upload external image URLs (e.g. Amazon links) to Cloudinary
+const uploadToCloudinaryIfExternal = async (url) => {
+  if (!url || typeof url !== 'string') return url;
+  const trimmed = url.trim();
+
+  if (!trimmed || trimmed.includes('cloudinary.com')) {
+    return trimmed;
+  }
+
+  try {
+    let targetUrl = trimmed;
+    if (targetUrl.includes('amazon.com/images') || targetUrl.includes('media-amazon.com')) {
+      targetUrl = targetUrl.replace(/\._[A-Z0-9_,]+_\./gi, '._AC_SL1500_.');
+    }
+
+    const result = await cloudinary.uploader.upload(targetUrl, {
+      folder: 'products',
+      resource_type: 'auto',
+      quality: 'auto:best'
+    });
+
+    return result.secure_url;
+  } catch (error) {
+    console.error('Failed to auto-upload external image to Cloudinary:', error.message);
+    return trimmed;
+  }
+};
+
 // @desc    Get all products
 // @route   GET /api/products
 // @access  Public
@@ -36,14 +71,22 @@ export const createProduct = async (req, res) => {
   try {
     const { title, asin, description, shortDescription, price, imageUrl, images, category, stock, hasSizes, sizes, variations, combinations } = req.body;
 
+    let finalCover = await uploadToCloudinaryIfExternal(imageUrl);
+    let rawImages = Array.isArray(images) ? images : (imageUrl ? [imageUrl] : []);
+    let finalImages = await Promise.all(rawImages.map(uploadToCloudinaryIfExternal));
+
+    if (!finalCover && finalImages.length > 0) {
+      finalCover = finalImages[0];
+    }
+
     const product = new Product({
       title,
       asin: asin || '',
       description,
       shortDescription: shortDescription || '',
       price,
-      imageUrl,
-      images: Array.isArray(images) ? images : (imageUrl ? [imageUrl] : []),
+      imageUrl: finalCover,
+      images: finalImages,
       category,
       stock,
       hasSizes,
@@ -74,8 +117,15 @@ export const updateProduct = async (req, res) => {
       product.description = description !== undefined ? description : product.description;
       product.shortDescription = shortDescription !== undefined ? shortDescription : product.shortDescription;
       product.price = price !== undefined ? price : product.price;
-      product.imageUrl = imageUrl !== undefined ? imageUrl : product.imageUrl;
-      product.images = images !== undefined ? (Array.isArray(images) ? images : [images]) : product.images;
+      
+      if (imageUrl !== undefined) {
+        product.imageUrl = await uploadToCloudinaryIfExternal(imageUrl);
+      }
+      if (images !== undefined) {
+        const rawImgs = Array.isArray(images) ? images : [images];
+        product.images = await Promise.all(rawImgs.map(uploadToCloudinaryIfExternal));
+      }
+
       product.category = category !== undefined ? category : product.category;
       product.stock = stock !== undefined ? stock : product.stock;
       product.hasSizes = hasSizes !== undefined ? hasSizes : product.hasSizes;
@@ -93,10 +143,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-// @desc    Delete a product
-// @route   DELETE /api/products/:id
-// @access  Public
-
+// Helper to extract Cloudinary public ID for deletion
 const extractPublicId = (url) => {
   if (!url || !url.includes('cloudinary')) return null;
   try {
@@ -124,11 +171,6 @@ export const deleteProduct = async (req, res) => {
         const publicId = extractPublicId(product.imageUrl);
         if (publicId) {
           try {
-            cloudinary.config({
-              cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-              api_key: process.env.CLOUDINARY_API_KEY,
-              api_secret: process.env.CLOUDINARY_API_SECRET
-            });
             await cloudinary.uploader.destroy(publicId);
             console.log(`Deleted Cloudinary image: ${publicId}`);
           } catch (clError) {

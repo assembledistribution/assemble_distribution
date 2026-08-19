@@ -112,19 +112,53 @@ function DashboardContent() {
     }
   };
 
-  const handleAddCustomUrl = () => {
+  const handleAddCustomUrl = async () => {
     if (!customImageUrl || !customImageUrl.trim()) return;
-    const url = customImageUrl.trim();
+    const inputUrl = customImageUrl.trim();
+    setUploading(true);
+
+    try {
+      const apiBase = getApiUrl();
+      const response = await fetch(`${apiBase}/upload/url`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: inputUrl }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && data.url) {
+          const cloudinaryUrl = data.url;
+          setNewProduct(prev => {
+            const updatedImages = [...(prev.images || []), cloudinaryUrl];
+            return {
+              ...prev,
+              images: updatedImages,
+              imageUrl: prev.imageUrl || cloudinaryUrl
+            };
+          });
+          setCustomImageUrl('');
+          showNotification('External image imported & uploaded to Cloudinary!');
+          return;
+        }
+      }
+    } catch (error) {
+      console.error('Failed to upload image URL to Cloudinary:', error);
+    } finally {
+      setUploading(false);
+    }
+
+    // Fallback if upload route is busy
     setNewProduct(prev => {
-      const updatedImages = [...(prev.images || []), url];
+      const updatedImages = [...(prev.images || []), inputUrl];
       return {
         ...prev,
         images: updatedImages,
-        imageUrl: prev.imageUrl || url
+        imageUrl: prev.imageUrl || inputUrl
       };
     });
     setCustomImageUrl('');
-    showNotification('Image URL added to gallery!');
+    showNotification('Image URL added!');
   };
 
   const handleRemoveImage = (indexToRemove) => {

@@ -102,4 +102,42 @@ router.post('/multiple', upload.array('images', 10), async (req, res) => {
   }
 });
 
+// Import external image URL directly to Cloudinary
+router.post('/url', async (req, res) => {
+  try {
+    const { imageUrl, url } = req.body;
+    let targetUrl = imageUrl || url;
+
+    if (!targetUrl || typeof targetUrl !== 'string') {
+      return res.status(400).json({ success: false, message: 'Please provide a valid image URL' });
+    }
+
+    targetUrl = targetUrl.trim();
+
+    // Clean Amazon thumbnail URLs to fetch full HD 1500px images
+    if (targetUrl.includes('amazon.com/images') || targetUrl.includes('media-amazon.com')) {
+      targetUrl = targetUrl.replace(/\._[A-Z0-9_,]+_\./gi, '._AC_SL1500_.');
+    }
+
+    const result = await cloudinary.uploader.upload(targetUrl, {
+      folder: 'products',
+      resource_type: 'auto',
+      quality: 'auto:best',
+    });
+
+    res.status(200).json({
+      success: true,
+      url: result.secure_url,
+      public_id: result.public_id
+    });
+  } catch (error) {
+    console.error('URL upload to Cloudinary error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload image URL to Cloudinary',
+      error: error.message
+    });
+  }
+});
+
 export default router;
