@@ -7,18 +7,23 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
-import { ArrowLeft, ShoppingCart, Truck, ShieldCheck, RefreshCw, Check, Package } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Truck, ShieldCheck, RefreshCw, Check, Package, Loader2 } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const router = useRouter();
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
   const { addToCart } = useCart();
+
+  // ALL hooks MUST be declared unconditionally at top level
   const [added, setAdded] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedVariation, setSelectedVariation] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const product = products.find(p => p.id === id || p.id === parseInt(id));
+  const product = products.find(
+    p => p.id === id || p._id === id || String(p.id) === String(id) || String(p._id) === String(id)
+  );
 
   const hasSizes = product?.hasSizes && product?.sizes && product?.sizes.length > 0;
   const hasVariations = product?.variations && product?.variations.length > 0;
@@ -31,6 +36,32 @@ export default function ProductDetailPage() {
     }
   }, [product, hasSizes, hasVariations]);
 
+  // Render loading state while fetching products from backend on page refresh
+  if (loading && !product) {
+    return (
+      <>
+        <Navbar />
+        <div style={{ padding: '140px 20px 100px', textAlign: 'center', minHeight: '65vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Loader2 size={44} className="spin-loader" style={{ color: 'var(--teal, #1C5C53)', marginBottom: '16px' }} />
+          <p style={{ color: 'var(--gray, #666)', fontSize: '1.05rem', fontWeight: 500 }}>Loading product details...</p>
+        </div>
+        <Footer />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .spin-loader {
+            animation: spin 1s linear infinite;
+          }
+          `
+        }} />
+      </>
+    );
+  }
+
+  // Render Not Found state if loading is complete and product doesn't exist
   if (!product) {
     return (
       <>
@@ -85,8 +116,6 @@ export default function ProductDetailPage() {
       }
     }
   }
-
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const productImages = Array.isArray(product?.images) && product.images.length > 0 
     ? product.images 
@@ -245,6 +274,8 @@ export default function ProductDetailPage() {
           padding-bottom: 60px;
           min-height: 85vh;
           background: #fafafa;
+          max-width: 100vw;
+          overflow-x: hidden;
         }
 
         .back-btn {
@@ -275,6 +306,7 @@ export default function ProductDetailPage() {
           grid-template-columns: 1.1fr 1fr;
           gap: 3.5rem;
           align-items: start;
+          max-width: 100%;
         }
 
         .product-image-section {
@@ -283,6 +315,7 @@ export default function ProductDetailPage() {
           gap: 16px;
           position: sticky;
           top: 110px;
+          max-width: 100%;
         }
 
         .product-image-container {
@@ -297,6 +330,7 @@ export default function ProductDetailPage() {
           aspect-ratio: 1 / 1;
           max-height: 480px;
           box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+          max-width: 100%;
         }
 
         .product-main-image {
@@ -314,6 +348,7 @@ export default function ProductDetailPage() {
           scrollbar-width: none;
           -ms-overflow-style: none;
           -webkit-overflow-scrolling: touch;
+          max-width: 100%;
         }
         .product-gallery-thumbnails::-webkit-scrollbar {
           display: none;
