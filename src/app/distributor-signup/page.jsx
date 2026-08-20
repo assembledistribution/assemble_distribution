@@ -113,17 +113,17 @@ export default function DistributorSignupPage() {
   const [status, setStatus] = useState({ type: '', message: '' });
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
-    companyName: '',
-    streetAddress: '',
+    company_name: '',
+    street_address: '',
     apartment: '',
     state: '',
     city: '',
-    zipCode: '',
-    taxId: '',
-    howFound: '',
+    zip_code: '',
+    tax_id: '',
+    how_found: '',
   });
 
   const handleChange = (e) => {
@@ -181,9 +181,9 @@ export default function DistributorSignupPage() {
               message: 'Thank you for your application! Our team will review your details and contact you.',
             });
             setFormData({
-              firstName: '', lastName: '', email: '', companyName: '',
-              streetAddress: '', apartment: '', state: '', city: '',
-              zipCode: '', taxId: '', howFound: '',
+              first_name: '', last_name: '', email: '', company_name: '',
+              street_address: '', apartment: '', state: '', city: '',
+              zip_code: '', tax_id: '', how_found: '',
             });
             setPhone('');
             setFileName('');
@@ -239,13 +239,13 @@ export default function DistributorSignupPage() {
             <form ref={formRef} onSubmit={handleSubmit} className="dist-form">
 
               {/* Hidden EmailJS helper inputs */}
-              <input type="hidden" name="full_name" value={`${formData.firstName} ${formData.lastName}`} />
-              <input type="hidden" name="from_name" value={`${formData.firstName} ${formData.lastName}`} />
+              <input type="hidden" name="full_name" value={`${formData.first_name} ${formData.last_name}`} />
+              <input type="hidden" name="from_name" value={`${formData.first_name} ${formData.last_name}`} />
               <input type="hidden" name="user_email" value={formData.email} />
               <input type="hidden" name="from_email" value={formData.email} />
               <input type="hidden" name="reply_to" value={formData.email} />
               <input type="hidden" name="phone" value={phone} />
-              <input type="hidden" name="full_address" value={`${formData.streetAddress}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} ${formData.zipCode}`} />
+              <input type="hidden" name="full_address" value={`${formData.street_address}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} ${formData.zip_code}`} />
 
               {/* Personal Information */}
               <div className="dist-form__section-title">Personal Information</div>
@@ -255,7 +255,7 @@ export default function DistributorSignupPage() {
                   <label htmlFor="dist-firstName">First Name <span className="req">*</span></label>
                   <input
                     type="text" id="dist-firstName" name="first_name"
-                    value={formData.firstName} onChange={handleChange}
+                    value={formData.first_name} onChange={handleChange}
                     placeholder="e.g. John" required
                   />
                 </div>
@@ -263,7 +263,7 @@ export default function DistributorSignupPage() {
                   <label htmlFor="dist-lastName">Last Name <span className="req">*</span></label>
                   <input
                     type="text" id="dist-lastName" name="last_name"
-                    value={formData.lastName} onChange={handleChange}
+                    value={formData.last_name} onChange={handleChange}
                     placeholder="e.g. Doe" required
                   />
                 </div>
@@ -282,7 +282,7 @@ export default function DistributorSignupPage() {
                   <label htmlFor="dist-companyName">Company Name <span className="req">*</span></label>
                   <input
                     type="text" id="dist-companyName" name="company_name"
-                    value={formData.companyName} onChange={handleChange}
+                    value={formData.company_name} onChange={handleChange}
                     placeholder="Your Company LLC" required
                   />
                 </div>
@@ -311,7 +311,7 @@ export default function DistributorSignupPage() {
                 <label htmlFor="dist-street">Street Address <span className="req">*</span></label>
                 <input
                   type="text" id="dist-street" name="street_address"
-                  value={formData.streetAddress} onChange={handleChange}
+                  value={formData.street_address} onChange={handleChange}
                   placeholder="House number and street name" required
                 />
               </div>
@@ -356,7 +356,7 @@ export default function DistributorSignupPage() {
                   <label htmlFor="dist-zip">ZIP Code <span className="req">*</span></label>
                   <input
                     type="text" id="dist-zip" name="zip_code"
-                    value={formData.zipCode} onChange={handleChange}
+                    value={formData.zip_code} onChange={handleChange}
                     placeholder="e.g. 75001" required
                     pattern="[0-9]{5}(-[0-9]{4})?"
                     title="Enter a valid 5-digit ZIP code"
@@ -371,7 +371,7 @@ export default function DistributorSignupPage() {
                 <label htmlFor="dist-taxId">Tax ID <span className="req">*</span></label>
                 <input
                   type="text" id="dist-taxId" name="tax_id"
-                  value={formData.taxId} onChange={handleChange}
+                  value={formData.tax_id} onChange={handleChange}
                   placeholder="e.g. 12-3456789" required
                 />
               </div>
@@ -416,7 +416,7 @@ export default function DistributorSignupPage() {
                 <label htmlFor="dist-howFound">How did you find us? <span className="req">*</span></label>
                 <select
                   id="dist-howFound" name="how_found"
-                  value={formData.howFound} onChange={handleChange} required
+                  value={formData.how_found} onChange={handleChange} required
                 >
                   {HOW_FOUND_OPTIONS.map(opt => (
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
