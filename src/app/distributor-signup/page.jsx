@@ -160,59 +160,22 @@ export default function DistributorSignupPage() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setStatus({ type: '', message: '' });
-
-    let base64File = '';
-    if (fileObj) {
-      try {
-        base64File = await convertBase64(fileObj);
-      } catch (err) {
-        console.error('File conversion error:', err);
-      }
-    }
 
     const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'YreWu9jrl7hIbkk2TXgyy';
     const templateID = process.env.NEXT_PUBLIC_EMAILJS_DISTRIBUTOR_TEMPLATE_ID || process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_89o9v1p';
     const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'BwHsNp2ijQiXMWCYS';
 
-    const templateParams = {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      full_name: `${formData.firstName} ${formData.lastName}`,
-      from_name: `${formData.firstName} ${formData.lastName}`,
-
-      user_email: formData.email,
-      from_email: formData.email,
-      email: formData.email,
-      reply_to: formData.email,
-
-      company_name: formData.companyName,
-      user_phone: phone,
-      phone: phone,
-
-      street_address: formData.streetAddress,
-      apartment: formData.apartment || 'N/A',
-      city: formData.city,
-      state: formData.state,
-      zip_code: formData.zipCode,
-      full_address: `${formData.streetAddress}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} ${formData.zipCode}`,
-
-      tax_id: formData.taxId,
-      tax_id_file_name: fileName || 'No file attached',
-      tax_id_file: base64File || fileName || 'No file attached',
-      how_found: formData.howFound,
-    };
-
     import('@emailjs/browser').then((emailjs) => {
       emailjs.default
-        .send(serviceID, templateID, templateParams, publicKey)
+        .sendForm(serviceID, templateID, formRef.current, publicKey)
         .then(
           (response) => {
             setLoading(false);
-            console.log('EmailJS Success:', response.status, response.text);
+            console.log('EmailJS sendForm Success:', response.status, response.text);
             setStatus({
               type: 'success',
               message: 'Thank you for your application! Our team will review your details and contact you.',
@@ -273,7 +236,16 @@ export default function DistributorSignupPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="dist-form">
+            <form ref={formRef} onSubmit={handleSubmit} className="dist-form">
+
+              {/* Hidden EmailJS helper inputs */}
+              <input type="hidden" name="full_name" value={`${formData.firstName} ${formData.lastName}`} />
+              <input type="hidden" name="from_name" value={`${formData.firstName} ${formData.lastName}`} />
+              <input type="hidden" name="user_email" value={formData.email} />
+              <input type="hidden" name="from_email" value={formData.email} />
+              <input type="hidden" name="reply_to" value={formData.email} />
+              <input type="hidden" name="phone" value={phone} />
+              <input type="hidden" name="full_address" value={`${formData.streetAddress}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} ${formData.zipCode}`} />
 
               {/* Personal Information */}
               <div className="dist-form__section-title">Personal Information</div>
@@ -282,7 +254,7 @@ export default function DistributorSignupPage() {
                 <div className="form-group">
                   <label htmlFor="dist-firstName">First Name <span className="req">*</span></label>
                   <input
-                    type="text" id="dist-firstName" name="firstName"
+                    type="text" id="dist-firstName" name="first_name"
                     value={formData.firstName} onChange={handleChange}
                     placeholder="e.g. John" required
                   />
@@ -290,7 +262,7 @@ export default function DistributorSignupPage() {
                 <div className="form-group">
                   <label htmlFor="dist-lastName">Last Name <span className="req">*</span></label>
                   <input
-                    type="text" id="dist-lastName" name="lastName"
+                    type="text" id="dist-lastName" name="last_name"
                     value={formData.lastName} onChange={handleChange}
                     placeholder="e.g. Doe" required
                   />
@@ -309,7 +281,7 @@ export default function DistributorSignupPage() {
                 <div className="form-group">
                   <label htmlFor="dist-companyName">Company Name <span className="req">*</span></label>
                   <input
-                    type="text" id="dist-companyName" name="companyName"
+                    type="text" id="dist-companyName" name="company_name"
                     value={formData.companyName} onChange={handleChange}
                     placeholder="Your Company LLC" required
                   />
@@ -338,7 +310,7 @@ export default function DistributorSignupPage() {
               <div className="form-group">
                 <label htmlFor="dist-street">Street Address <span className="req">*</span></label>
                 <input
-                  type="text" id="dist-street" name="streetAddress"
+                  type="text" id="dist-street" name="street_address"
                   value={formData.streetAddress} onChange={handleChange}
                   placeholder="House number and street name" required
                 />
@@ -383,7 +355,7 @@ export default function DistributorSignupPage() {
                 <div className="form-group">
                   <label htmlFor="dist-zip">ZIP Code <span className="req">*</span></label>
                   <input
-                    type="text" id="dist-zip" name="zipCode"
+                    type="text" id="dist-zip" name="zip_code"
                     value={formData.zipCode} onChange={handleChange}
                     placeholder="e.g. 75001" required
                     pattern="[0-9]{5}(-[0-9]{4})?"
@@ -398,7 +370,7 @@ export default function DistributorSignupPage() {
               <div className="form-group">
                 <label htmlFor="dist-taxId">Tax ID <span className="req">*</span></label>
                 <input
-                  type="text" id="dist-taxId" name="taxId"
+                  type="text" id="dist-taxId" name="tax_id"
                   value={formData.taxId} onChange={handleChange}
                   placeholder="e.g. 12-3456789" required
                 />
@@ -413,6 +385,7 @@ export default function DistributorSignupPage() {
                   <input
                     ref={fileInputRef}
                     type="file"
+                    name="tax_id_file"
                     accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
                     onChange={handleFileChange}
                     className="file-input-hidden"
@@ -442,7 +415,7 @@ export default function DistributorSignupPage() {
               <div className="form-group">
                 <label htmlFor="dist-howFound">How did you find us? <span className="req">*</span></label>
                 <select
-                  id="dist-howFound" name="howFound"
+                  id="dist-howFound" name="how_found"
                   value={formData.howFound} onChange={handleChange} required
                 >
                   {HOW_FOUND_OPTIONS.map(opt => (
