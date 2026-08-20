@@ -123,7 +123,7 @@ export default function Navbar() {
 
         {/* ── Right: Distributor + Search + Cart (desktop) ── */}
         <div className="navbar__right">
-          <Link href="/contact" className="navbar__cta navbar__cta--desktop" id="navbar-distributor-btn">
+          <Link href="/distributor-signup" className="navbar__cta navbar__cta--desktop" id="navbar-distributor-btn">
             Sign Up For Distributor
           </Link>
 
@@ -242,7 +242,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        <Link href="/contact" className="navbar__cta navbar__cta--mobile" onClick={closeMobile} id="mobile-distributor-btn">
+        <Link href="/distributor-signup" className="navbar__cta navbar__cta--mobile" onClick={closeMobile} id="mobile-distributor-btn">
           Sign Up For Distributor
         </Link>
       </div>
