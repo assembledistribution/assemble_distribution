@@ -17,7 +17,7 @@ export default function Hero() {
           <h1 className="hero__h1" id="hero-heading">
             {/* Each word animates in with fold */}
             <span className="hero__fold hero__fold--1">Assemble</span>
-            <br />
+            <br className="hero__br" />
             <span className="hero__fold hero__fold--2 hero__word--teal">Distribution</span>
           </h1>
 
