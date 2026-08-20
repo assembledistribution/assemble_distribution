@@ -104,9 +104,11 @@ const HOW_FOUND_OPTIONS = [
 ];
 
 export default function DistributorSignupPage() {
+  const formRef = useRef(null);
   const fileInputRef = useRef(null);
   const [phone, setPhone] = useState('');
   const [fileName, setFileName] = useState('');
+  const [fileObj, setFileObj] = useState(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' });
 
@@ -137,20 +139,40 @@ export default function DistributorSignupPage() {
     const file = e.target.files[0];
     if (file) {
       setFileName(file.name);
+      setFileObj(file);
     }
   };
 
   const removeFile = () => {
     setFileName('');
+    setFileObj(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
 
-  const handleSubmit = (e) => {
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => resolve(fileReader.result);
+      fileReader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setStatus({ type: '', message: '' });
+
+    let base64File = '';
+    if (fileObj) {
+      try {
+        base64File = await convertBase64(fileObj);
+      } catch (err) {
+        console.error('File conversion error:', err);
+      }
+    }
 
     const serviceID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'YreWu9jrl7hIbkk2TXgyy';
     const templateID = process.env.NEXT_PUBLIC_EMAILJS_DISTRIBUTOR_TEMPLATE_ID || process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_89o9v1p';
@@ -179,7 +201,8 @@ export default function DistributorSignupPage() {
       full_address: `${formData.streetAddress}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} ${formData.zipCode}`,
 
       tax_id: formData.taxId,
-      tax_id_file: fileName || 'No file attached',
+      tax_id_file_name: fileName || 'No file attached',
+      tax_id_file: base64File || fileName || 'No file attached',
       how_found: formData.howFound,
     };
 
@@ -192,7 +215,7 @@ export default function DistributorSignupPage() {
             console.log('EmailJS Success:', response.status, response.text);
             setStatus({
               type: 'success',
-              message: 'Thank you for your application! Our team will review your details and contact you within 2-3 business days.',
+              message: 'Thank you for your application! Our team will review your details and contact you.',
             });
             setFormData({
               firstName: '', lastName: '', email: '', companyName: '',
@@ -201,6 +224,7 @@ export default function DistributorSignupPage() {
             });
             setPhone('');
             setFileName('');
+            setFileObj(null);
             if (fileInputRef.current) fileInputRef.current.value = '';
           },
           (error) => {
@@ -426,6 +450,18 @@ export default function DistributorSignupPage() {
                   ))}
                 </select>
               </div>
+
+              {/* Status Alert above Submit Button for instant UX feedback */}
+              {status.message && (
+                <div className={`status-alert status-alert--${status.type}`} style={{ marginTop: '12px', marginBottom: '4px' }}>
+                  {status.type === 'success' ? (
+                    <CheckCircle size={20} className="status-icon" />
+                  ) : (
+                    <AlertCircle size={20} className="status-icon" />
+                  )}
+                  <span>{status.message}</span>
+                </div>
+              )}
 
               {/* Submit */}
               <button
