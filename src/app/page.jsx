@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 export const metadata = {
   title: 'Assemble Distribution — Wholesale Products',
   description:
-    'Your trusted wholesale distributor for Art and Craft, Toys and Games, Garden and Outdoor products — delivered fast, priced right.',
+    'Your trusted wholesale distributor for Art, Craft and Sewing, Toys and Games, Garden and Outdoor products — delivered fast, priced right.',
 };
 
 export default function HomePage() {

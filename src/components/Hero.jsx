@@ -22,7 +22,7 @@ export default function Hero() {
           </h1>
 
           <p className="hero__sub hero__fold hero__fold--3">
-            Your trusted wholesale distributor for Art &amp; Craft,
+            Your trusted wholesale distributor for Art, Craft &amp; Sewing,
             Toys &amp; Games, and Garden &amp; Outdoor products — delivered fast, priced right.
           </p>
 

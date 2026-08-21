@@ -9,9 +9,16 @@ import { ShoppingCart, Search } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const categories = [
-  { id: 'art-craft', label: 'Art and Craft' },
+  { id: 'art-craft', label: 'Art, Craft and Sewing' },
   { id: 'toys-games', label: 'Toys and Games' },
   { id: 'garden-outdoor', label: 'Garden and Outdoor' },
+  { id: 'office-products', label: 'Office Products' },
+  { id: 'home-kitchen', label: 'Home and Kitchen' },
+  { id: 'health-household', label: 'Health and Household' },
+  { id: 'tools-home-improvement', label: 'Tools and Home Improvement' },
+  { id: 'sports-outdoors', label: 'Sports and Outdoors' },
+  { id: 'industrial-scientific', label: 'Industrial and Scientific' },
+  { id: 'automotive-parts-accessories', label: 'Automotive Parts and Accessories' },
 ];
 
 export default function Navbar() {

@@ -18,12 +18,19 @@ export default function Footer() {
 
         {/* Menu links */}
         <div>
-          <h3 className="footer__col-title">Shop</h3>
+          <h3 className="footer__col-title">Shop Categories</h3>
           <ul className="footer__links">
             <li><Link href="/shop" id="footer-link-all">All Products</Link></li>
-            <li><Link href="/shop/art-craft" id="footer-link-art">Art & Craft</Link></li>
+            <li><Link href="/shop/art-craft" id="footer-link-art">Art, Craft & Sewing</Link></li>
             <li><Link href="/shop/toys-games" id="footer-link-toys">Toys & Games</Link></li>
             <li><Link href="/shop/garden-outdoor" id="footer-link-garden">Garden & Outdoor</Link></li>
+            <li><Link href="/shop/office-products" id="footer-link-office">Office Products</Link></li>
+            <li><Link href="/shop/home-kitchen" id="footer-link-kitchen">Home & Kitchen</Link></li>
+            <li><Link href="/shop/health-household" id="footer-link-health">Health & Household</Link></li>
+            <li><Link href="/shop/tools-home-improvement" id="footer-link-tools">Tools & Home Improvement</Link></li>
+            <li><Link href="/shop/sports-outdoors" id="footer-link-sports">Sports & Outdoors</Link></li>
+            <li><Link href="/shop/industrial-scientific" id="footer-link-industrial">Industrial & Scientific</Link></li>
+            <li><Link href="/shop/automotive-parts-accessories" id="footer-link-auto">Automotive Parts & Accessories</Link></li>
           </ul>
         </div>
 

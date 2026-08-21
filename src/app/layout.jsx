@@ -16,11 +16,11 @@ export const metadata = {
     template: '%s | Assemble Distribution',
   },
   description:
-    'Your trusted wholesale distributor for Art and Craft, Toys and Games, Garden and Outdoor products — delivered fast, priced right.',
+    'Your trusted wholesale distributor for Art, Craft and Sewing, Toys and Games, Garden and Outdoor products — delivered fast, priced right.',
   keywords: [
     'wholesale',
     'distribution',
-    'art and craft',
+    'art, craft and sewing',
     'toys and games',
     'garden and outdoor',
     'bulk products',
@@ -28,7 +28,7 @@ export const metadata = {
   openGraph: {
     title: 'Assemble Distribution — Wholesale Products',
     description:
-      'Your trusted wholesale distributor for Art and Craft, Toys and Games, Garden and Outdoor products.',
+      'Your trusted wholesale distributor for Art, Craft and Sewing, Toys and Games, Garden and Outdoor products.',
     type: 'website',
   },
 };

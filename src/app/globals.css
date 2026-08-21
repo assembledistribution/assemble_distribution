@@ -335,12 +335,13 @@ button {
   top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  min-width: 200px;
+  min-width: 260px;
+  max-height: 420px;
+  overflow-y: auto;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   z-index: 300;
   animation: dropdown-in 0.18s ease;
 }

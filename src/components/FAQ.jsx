@@ -7,7 +7,7 @@ const faqs = [
     id: 'faq-1',
     question: 'What product categories does Assemble Distribution carry?',
     answer:
-      'We carry three main wholesale categories: Art and Craft (supplies, tools, and materials), Toys and Games (for all age groups), and Garden and Outdoor (tools, plants, and outdoor living products). Each category is sourced from trusted manufacturers with quality assurance.',
+      'We carry 10 premier wholesale categories: Art, Craft and Sewing, Toys and Games, Garden and Outdoor, Office Products, Home and Kitchen, Health and Household, Tools and Home Improvement, Sports and Outdoors, Industrial and Scientific, and Automotive Parts and Accessories. Each category is sourced directly from trusted manufacturers with full quality assurance.',
   },
   {
     id: 'faq-2',

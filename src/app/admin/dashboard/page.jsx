@@ -719,9 +719,16 @@ function DashboardContent() {
                   }}
                 >
                   <option value="all">All Categories</option>
-                  <option value="art-craft">Art & Craft</option>
+                  <option value="art-craft">Art, Craft & Sewing</option>
                   <option value="toys-games">Toys & Games</option>
                   <option value="garden-outdoor">Garden & Outdoor</option>
+                  <option value="office-products">Office Products</option>
+                  <option value="home-kitchen">Home & Kitchen</option>
+                  <option value="health-household">Health & Household</option>
+                  <option value="tools-home-improvement">Tools & Home Improvement</option>
+                  <option value="sports-outdoors">Sports & Outdoors</option>
+                  <option value="industrial-scientific">Industrial & Scientific</option>
+                  <option value="automotive-parts-accessories">Automotive Parts & Accessories</option>
                 </select>
 
                 {(searchQuery || categoryFilter !== 'all') && (
@@ -823,7 +830,20 @@ function DashboardContent() {
                               textTransform: 'capitalize',
                               fontWeight: '700'
                             }}>
-                              {(product.category || 'Art Craft').replace('-', ' ')}
+                               {
+                                 {
+                                   'art-craft': 'Art, Craft & Sewing',
+                                   'toys-games': 'Toys & Games',
+                                   'garden-outdoor': 'Garden & Outdoor',
+                                   'office-products': 'Office Products',
+                                   'home-kitchen': 'Home & Kitchen',
+                                   'health-household': 'Health & Household',
+                                   'tools-home-improvement': 'Tools & Home Improvement',
+                                   'sports-outdoors': 'Sports & Outdoors',
+                                   'industrial-scientific': 'Industrial & Scientific',
+                                   'automotive-parts-accessories': 'Automotive Parts & Accessories',
+                                 }[product.category] || (product.category || '').replace(/-/g, ' ')
+                               }
                             </span>
                           </td>
 
@@ -1007,9 +1027,16 @@ function DashboardContent() {
                         onChange={e => setNewProduct({...newProduct, category: e.target.value})}
                         style={{ width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid var(--line, #E7E5E0)', fontSize: '14px', backgroundColor: 'var(--cream, #FBFAF8)', color: 'var(--ink, #1C1C1C)', cursor: 'pointer' }}
                       >
-                        <option value="art-craft">Art and Craft</option>
+                        <option value="art-craft">Art, Craft and Sewing</option>
                         <option value="toys-games">Toys and Games</option>
                         <option value="garden-outdoor">Garden and Outdoor</option>
+                        <option value="office-products">Office Products</option>
+                        <option value="home-kitchen">Home and Kitchen</option>
+                        <option value="health-household">Health and Household</option>
+                        <option value="tools-home-improvement">Tools and Home Improvement</option>
+                        <option value="sports-outdoors">Sports and Outdoors</option>
+                        <option value="industrial-scientific">Industrial and Scientific</option>
+                        <option value="automotive-parts-accessories">Automotive Parts and Accessories</option>
                       </select>
                     </div>
                   </div>

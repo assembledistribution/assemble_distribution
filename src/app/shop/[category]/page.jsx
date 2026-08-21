@@ -12,10 +12,24 @@ export default function ShopCategoryPage() {
   const { products } = useProducts();
 
   const filteredProducts = category 
-    ? products.filter(p => p.category === category)
+    ? products.filter(p => p.category === category || (category === 'art-craft' && p.category === 'art-craft-sewing') || (category === 'art-craft-sewing' && p.category === 'art-craft'))
     : products;
 
-  const categoryTitle = category ? category.replace('-', ' ') : 'All Products';
+  const categoryTitleMap = {
+    'art-craft': 'Art, Craft and Sewing',
+    'art-craft-sewing': 'Art, Craft and Sewing',
+    'toys-games': 'Toys and Games',
+    'garden-outdoor': 'Garden and Outdoor',
+    'office-products': 'Office Products',
+    'home-kitchen': 'Home and Kitchen',
+    'health-household': 'Health and Household',
+    'tools-home-improvement': 'Tools and Home Improvement',
+    'sports-outdoors': 'Sports and Outdoors',
+    'industrial-scientific': 'Industrial and Scientific',
+    'automotive-parts-accessories': 'Automotive Parts and Accessories',
+  };
+
+  const categoryTitle = category ? (categoryTitleMap[category] || category.replace(/-/g, ' ')) : 'All Products';
 
   return (
     <>

@@ -18,7 +18,7 @@ export default function CTABanner() {
           </h2>
           <p className="cta-banner__p">
             Join hundreds of retailers who trust Assemble Distribution for
-            reliable wholesale supply across Art &amp; Craft, Toys &amp; Games,
+            reliable wholesale supply across Art, Craft &amp; Sewing, Toys &amp; Games,
             and Garden &amp; Outdoor categories.
           </p>
           <div className="cta-banner__buttons">

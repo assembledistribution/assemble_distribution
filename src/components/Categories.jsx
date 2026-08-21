@@ -7,14 +7,14 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const categories = [
   {
     id: 'art-craft',
-    label: 'Art and Craft',
+    label: 'Art, Craft and Sewing',
     img: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80&auto=format&fit=crop',
-    alt: 'Art and craft supplies — paints, brushes, tools',
+    alt: 'Art, craft and sewing supplies — paints, brushes, tools',
   },
   {
     id: 'toys-games',
     label: 'Toys and Games',
-    img: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    img: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=870&auto=format&fit=crop',
     alt: 'Toys and games for all ages',
   },
   {
@@ -22,6 +22,48 @@ const categories = [
     label: 'Garden and Outdoor',
     img: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80&auto=format&fit=crop',
     alt: 'Garden and outdoor tools and plants',
+  },
+  {
+    id: 'office-products',
+    label: 'Office Products',
+    img: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&q=80&auto=format&fit=crop',
+    alt: 'Office supplies, stationery and desk organization',
+  },
+  {
+    id: 'home-kitchen',
+    label: 'Home and Kitchen',
+    img: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&q=80&auto=format&fit=crop',
+    alt: 'Home decor, kitchenware and cookware',
+  },
+  {
+    id: 'health-household',
+    label: 'Health and Household',
+    img: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80&auto=format&fit=crop',
+    alt: 'Health, wellness and household essentials',
+  },
+  {
+    id: 'tools-home-improvement',
+    label: 'Tools and Home Improvement',
+    img: 'https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?w=800&q=80&auto=format&fit=crop',
+    alt: 'Hardware tools and home improvement supplies',
+  },
+  {
+    id: 'sports-outdoors',
+    label: 'Sports and Outdoors',
+    img: 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=800&q=80&auto=format&fit=crop',
+    alt: 'Sports equipment, fitness gear and outdoor activities',
+  },
+  {
+    id: 'industrial-scientific',
+    label: 'Industrial and Scientific',
+    img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80&auto=format&fit=crop',
+    alt: 'Industrial equipment, scientific instruments and supplies',
+  },
+  {
+    id: 'automotive-parts-accessories',
+    label: 'Automotive Parts and Accessories',
+    img: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80&auto=format&fit=crop',
+    alt: 'Automotive parts, car accessories and maintenance supplies',
   },
 ];
 
