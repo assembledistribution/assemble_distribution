@@ -4,13 +4,6 @@ import React, { useEffect, useState, useRef } from 'react';
 
 const defaultStats = [
   {
-    id: 'stat-products',
-    value: 10000,
-    suffix: '+',
-    heading: 'Products Available',
-    sub: 'Wholesale items ready for dispatch',
-  },
-  {
     id: 'stat-brands',
     value: 500,
     suffix: '+',

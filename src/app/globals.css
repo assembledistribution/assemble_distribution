@@ -991,8 +991,16 @@ button {
 
 .stats__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .stats__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 .stat-item {
