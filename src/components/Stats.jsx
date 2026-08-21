@@ -5,7 +5,7 @@ import React, { useEffect, useState, useRef } from 'react';
 const defaultStats = [
   {
     id: 'stat-brands',
-    value: 500,
+    value: 100,
     suffix: '+',
     heading: 'Trusted Brands',
     sub: 'Verified global manufacturers & partners',
