@@ -4,7 +4,8 @@ const combinationSchema = new mongoose.Schema({
   size: { type: String, default: '' },
   variation: { type: String, default: '' },
   price: { type: Number, default: null },
-  stock: { type: Number, default: null }
+  stock: { type: Number, default: null },
+  imageUrl: { type: String, default: '' }
 });
 
 const productSchema = new mongoose.Schema(

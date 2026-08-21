@@ -56,6 +56,7 @@ function DashboardContent() {
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [draggedIndex, setDraggedIndex] = useState(null);
 
   const handleMultipleImagesUpload = async (e) => {
     const files = Array.from(e.target.files || []);
@@ -185,6 +186,55 @@ function DashboardContent() {
     showNotification('Set as main cover image!');
   };
 
+  const handleMoveImage = (fromIdx, toIdx) => {
+    if (fromIdx < 0 || toIdx < 0 || fromIdx >= (newProduct.images?.length || 0) || toIdx >= (newProduct.images?.length || 0)) {
+      return;
+    }
+    setNewProduct(prev => {
+      const updatedImages = [...(prev.images || [])];
+      const [movedImg] = updatedImages.splice(fromIdx, 1);
+      updatedImages.splice(toIdx, 0, movedImg);
+      
+      const newMainUrl = prev.imageUrl === updatedImages[fromIdx] ? updatedImages[toIdx] : (prev.imageUrl || updatedImages[0] || '');
+      return {
+        ...prev,
+        images: updatedImages,
+        imageUrl: newMainUrl
+      };
+    });
+    showNotification(`Image lineup reordered to position #${toIdx + 1}`);
+  };
+
+  const handleDragStart = (e, index) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e, dropIndex) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === dropIndex) return;
+    
+    setNewProduct(prev => {
+      const updatedImages = [...(prev.images || [])];
+      const [draggedImg] = updatedImages.splice(draggedIndex, 1);
+      updatedImages.splice(dropIndex, 0, draggedImg);
+      
+      const newMainUrl = prev.imageUrl || updatedImages[0] || '';
+      return {
+        ...prev,
+        images: updatedImages,
+        imageUrl: newMainUrl
+      };
+    });
+    setDraggedIndex(null);
+    showNotification('Image lineup reordered!');
+  };
+
   // Auto-generate combinations matrix when sizes or variations change
   useEffect(() => {
     const sizeArr = newProduct.hasSizes && newProduct.sizes ? newProduct.sizes.split(',').map(s => s.trim()).filter(Boolean) : [];
@@ -195,16 +245,16 @@ function DashboardContent() {
     if (sizeArr.length > 0 && varArr.length > 0) {
       sizeArr.forEach(s => {
         varArr.forEach(v => {
-          newCombinations.push({ size: s, variation: v, price: '' });
+          newCombinations.push({ size: s, variation: v, price: '', imageUrl: '' });
         });
       });
     } else if (sizeArr.length > 0) {
       sizeArr.forEach(s => {
-        newCombinations.push({ size: s, variation: '', price: '' });
+        newCombinations.push({ size: s, variation: '', price: '', imageUrl: '' });
       });
     } else if (varArr.length > 0) {
       varArr.forEach(v => {
-        newCombinations.push({ size: '', variation: v, price: '' });
+        newCombinations.push({ size: '', variation: v, price: '', imageUrl: '' });
       });
     }
 
@@ -252,7 +302,8 @@ function DashboardContent() {
       variations: Array.isArray(product.variations) ? product.variations.join(', ') : (product.variations || ''),
       combinations: (product.combinations || []).map(c => ({
         ...c,
-        price: c.price !== null && c.price !== undefined ? c.price : ''
+        price: c.price !== null && c.price !== undefined ? c.price : '',
+        imageUrl: c.imageUrl || ''
       }))
     });
     setActiveTab('add-product');
@@ -309,7 +360,8 @@ function DashboardContent() {
         variations: (newProduct.variations || '') ? newProduct.variations.split(',').map(v => v.trim()).filter(Boolean) : [],
         combinations: (newProduct.combinations || []).map(c => ({
           ...c,
-          price: c.price ? parseFloat(c.price) : null
+          price: c.price ? parseFloat(c.price) : null,
+          imageUrl: c.imageUrl ? c.imageUrl.trim() : ''
         }))
       };
 
@@ -1123,17 +1175,26 @@ function DashboardContent() {
                   {/* Gallery Preview Grid */}
                   {newProduct.images && newProduct.images.length > 0 ? (
                     <div>
-                      <label style={{ display: 'block', marginBottom: '10px', fontSize: '13px', color: 'var(--ink, #1C1C1C)', fontWeight: '700' }}>
-                        Product Image Gallery (Click star to set main cover image):
-                      </label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap', gap: '8px' }}>
+                        <label style={{ fontSize: '13px', color: 'var(--ink, #1C1C1C)', fontWeight: '700' }}>
+                          Product Image Gallery ({newProduct.images.length} photos):
+                        </label>
+                        <span style={{ fontSize: '11px', color: 'var(--teal, #1C5C53)', fontWeight: '600', backgroundColor: '#e6f2f0', padding: '3px 10px', borderRadius: '12px' }}>
+                          💡 Drag cards or click ◄ ► arrows to reorder photo lineup
+                        </span>
+                      </div>
                       
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '14px' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '14px' }}>
                         {newProduct.images.map((imgUrl, idx) => {
                           const isMainCover = imgUrl === newProduct.imageUrl || (idx === 0 && !newProduct.imageUrl);
 
                           return (
                             <div
                               key={idx}
+                              draggable
+                              onDragStart={(e) => handleDragStart(e, idx)}
+                              onDragOver={handleDragOver}
+                              onDrop={(e) => handleDrop(e, idx)}
                               style={{
                                 position: 'relative',
                                 borderRadius: '12px',
@@ -1141,7 +1202,10 @@ function DashboardContent() {
                                 border: isMainCover ? '2px solid var(--teal, #1C5C53)' : '1px solid var(--line, #E7E5E0)',
                                 backgroundColor: 'var(--bg-neutral, #F4F3F0)',
                                 display: 'flex',
-                                flexDirection: 'column'
+                                flexDirection: 'column',
+                                cursor: 'grab',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                                transition: 'transform 0.15s ease, box-shadow 0.15s ease'
                               }}
                             >
                               <div style={{ height: '110px', width: '100%', position: 'relative', overflow: 'hidden' }}>
@@ -1154,6 +1218,22 @@ function DashboardContent() {
                                     e.currentTarget.src = 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400&auto=format&fit=crop';
                                   }}
                                 />
+                                
+                                {/* Lineup Position Badge */}
+                                <span style={{
+                                  position: 'absolute',
+                                  top: '6px',
+                                  right: '6px',
+                                  backgroundColor: 'rgba(0,0,0,0.7)',
+                                  color: '#ffffff',
+                                  fontSize: '11px',
+                                  fontWeight: '800',
+                                  padding: '2px 7px',
+                                  borderRadius: '10px'
+                                }}>
+                                  #{idx + 1}
+                                </span>
+
                                 {isMainCover && (
                                   <span style={{
                                     position: 'absolute',
@@ -1171,7 +1251,61 @@ function DashboardContent() {
                                 )}
                               </div>
 
-                              <div style={{ padding: '6px', backgroundColor: '#ffffff', display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--line, #E7E5E0)' }}>
+                              {/* Reorder Arrow Lineup Controls */}
+                              <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                backgroundColor: '#f8f9fa',
+                                padding: '4px 8px',
+                                borderTop: '1px solid var(--line, #E7E5E0)',
+                                borderBottom: '1px solid var(--line, #E7E5E0)'
+                              }}>
+                                <button
+                                  type="button"
+                                  onClick={() => handleMoveImage(idx, idx - 1)}
+                                  disabled={idx === 0}
+                                  style={{
+                                    border: '1px solid var(--line, #E7E5E0)',
+                                    backgroundColor: idx === 0 ? '#f3f4f6' : '#ffffff',
+                                    color: idx === 0 ? '#d1d5db' : 'var(--ink, #1C1C1C)',
+                                    borderRadius: '6px',
+                                    padding: '2px 8px',
+                                    fontSize: '12px',
+                                    fontWeight: '700',
+                                    cursor: idx === 0 ? 'not-allowed' : 'pointer'
+                                  }}
+                                  title="Move photo left in lineup"
+                                >
+                                  ◄
+                                </button>
+
+                                <span style={{ fontSize: '11px', color: 'var(--gray, #6B6F6E)', fontWeight: '600' }}>
+                                  Lineup
+                                </span>
+
+                                <button
+                                  type="button"
+                                  onClick={() => handleMoveImage(idx, idx + 1)}
+                                  disabled={idx === newProduct.images.length - 1}
+                                  style={{
+                                    border: '1px solid var(--line, #E7E5E0)',
+                                    backgroundColor: idx === newProduct.images.length - 1 ? '#f3f4f6' : '#ffffff',
+                                    color: idx === newProduct.images.length - 1 ? '#d1d5db' : 'var(--ink, #1C1C1C)',
+                                    borderRadius: '6px',
+                                    padding: '2px 8px',
+                                    fontSize: '12px',
+                                    fontWeight: '700',
+                                    cursor: idx === newProduct.images.length - 1 ? 'not-allowed' : 'pointer'
+                                  }}
+                                  title="Move photo right in lineup"
+                                >
+                                  ►
+                                </button>
+                              </div>
+
+                              {/* Cover Star & Delete Actions */}
+                              <div style={{ padding: '6px 8px', backgroundColor: '#ffffff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <button
                                   type="button"
                                   onClick={() => handleSetCoverImage(imgUrl)}
@@ -1263,14 +1397,15 @@ function DashboardContent() {
                   {(newProduct.sizes || newProduct.variations) && newProduct.combinations.length > 0 && (
                     <div style={{ marginTop: '12px', backgroundColor: 'var(--cream, #FBFAF8)', padding: '20px', borderRadius: '12px', border: '1px solid var(--line, #E7E5E0)' }}>
                       <h4 style={{ fontSize: '14px', fontWeight: '700', color: 'var(--ink, #1C1C1C)', marginTop: 0, marginBottom: '14px' }}>
-                        Variant Pricing Matrix
+                        Variant Pricing & Feature Media Matrix
                       </h4>
 
                       <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
                         <thead>
                           <tr style={{ borderBottom: '1px solid var(--line, #E7E5E0)', color: 'var(--ink, #1C1C1C)' }}>
                             <th style={{ padding: '10px 6px' }}>Variant</th>
-                            <th style={{ padding: '10px 6px' }}>Price ($)</th>
+                            <th style={{ padding: '10px 6px', width: '120px' }}>Price ($)</th>
+                            <th style={{ padding: '10px 6px' }}>Variant Feature Image</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1286,8 +1421,42 @@ function DashboardContent() {
                                   placeholder={newProduct.price || 'Base'}
                                   value={combo.price ?? ''}
                                   onChange={e => updateCombination(index, 'price', e.target.value)}
-                                  style={{ width: '120px', padding: '8px', borderRadius: '6px', border: '1px solid var(--line, #E7E5E0)' }}
+                                  style={{ width: '100px', padding: '8px', borderRadius: '6px', border: '1px solid var(--line, #E7E5E0)' }}
                                 />
+                              </td>
+                              <td style={{ padding: '10px 6px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                  {combo.imageUrl ? (
+                                    <img 
+                                      src={combo.imageUrl} 
+                                      alt="Variant preview" 
+                                      style={{ width: '36px', height: '36px', borderRadius: '6px', objectFit: 'cover', border: '1px solid var(--teal, #1C5C53)' }} 
+                                    />
+                                  ) : null}
+                                  
+                                  <input
+                                    type="text"
+                                    placeholder="Paste Variant Image URL or pick below..."
+                                    value={combo.imageUrl || ''}
+                                    onChange={e => updateCombination(index, 'imageUrl', e.target.value)}
+                                    style={{ flex: 1, minWidth: '180px', padding: '8px 12px', borderRadius: '6px', border: '1px solid var(--line, #E7E5E0)', fontSize: '13px', backgroundColor: '#fff' }}
+                                  />
+
+                                  {newProduct.images && newProduct.images.length > 0 && (
+                                    <select
+                                      value={combo.imageUrl || ''}
+                                      onChange={e => updateCombination(index, 'imageUrl', e.target.value)}
+                                      style={{ padding: '8px 10px', borderRadius: '6px', border: '1px solid var(--line, #E7E5E0)', fontSize: '12px', cursor: 'pointer', backgroundColor: '#fff' }}
+                                    >
+                                      <option value="">Pick from Gallery...</option>
+                                      {newProduct.images.map((imgUrl, i) => (
+                                        <option key={i} value={imgUrl}>
+                                          Photo #{i + 1}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  )}
+                                </div>
                               </td>
                             </tr>
                           ))}

@@ -36,6 +36,21 @@ export default function ProductDetailPage() {
     }
   }, [product, hasSizes, hasVariations]);
 
+  // Auto-switch main image when selected size or variation changes if variation image exists
+  useEffect(() => {
+    if (product && product.combinations && product.combinations.length > 0) {
+      const matchedCombo = product.combinations.find(c => {
+        const sizeMatch = hasSizes ? c.size === selectedSize : true;
+        const varMatch = hasVariations ? c.variation === selectedVariation : true;
+        return sizeMatch && varMatch;
+      });
+
+      if (matchedCombo && matchedCombo.imageUrl) {
+        setSelectedImage(matchedCombo.imageUrl);
+      }
+    }
+  }, [selectedSize, selectedVariation, product, hasSizes, hasVariations]);
+
   // Render loading state while fetching products from backend on page refresh
   if (loading && !product) {
     return (
@@ -209,13 +224,27 @@ export default function ProductDetailPage() {
                   <div className="variation-selector">
                     {product.variations.map((variation, idx) => {
                       const isSelected = selectedVariation === variation;
+                      const varCombo = (product.combinations || []).find(c => c.variation === variation && c.imageUrl);
+                      const varImg = varCombo?.imageUrl || null;
+
                       return (
                         <button
                           key={idx}
                           className={`variation-btn ${isSelected ? 'active' : ''}`}
-                          onClick={() => setSelectedVariation(variation)}
+                          onClick={() => {
+                            setSelectedVariation(variation);
+                            if (varImg) setSelectedImage(varImg);
+                          }}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                         >
-                          {variation}
+                          {varImg && (
+                            <img 
+                              src={varImg} 
+                              alt={variation} 
+                              style={{ width: '22px', height: '22px', borderRadius: '4px', objectFit: 'cover' }} 
+                            />
+                          )}
+                          <span>{variation}</span>
                         </button>
                       );
                     })}

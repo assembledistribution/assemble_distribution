@@ -12,11 +12,19 @@ const formatProductHd = (p) => {
     ? p.images.map(getHighResImageUrl) 
     : (imageUrl ? [imageUrl] : []);
 
+  const combinations = Array.isArray(p.combinations) 
+    ? p.combinations.map(c => ({
+        ...c,
+        imageUrl: c.imageUrl ? getHighResImageUrl(c.imageUrl) : ''
+      }))
+    : (p.combinations || []);
+
   return {
     ...p,
     id: p._id || p.id,
     imageUrl,
-    images
+    images,
+    combinations
   };
 };
 
