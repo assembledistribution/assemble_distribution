@@ -285,10 +285,14 @@ export default function ContactPage() {
 
         .contact-title {
           font-size: clamp(32px, 5vw, 48px);
-          font-weight: 700;
-          color: var(--ink);
+          font-weight: 800;
+          letter-spacing: -0.025em;
+          background: linear-gradient(135deg, #111827 0%, #1c3d37 40%, #2a9d8f 60%, #111827 100%);
+          background-size: 250% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           margin-bottom: 16px;
-          letter-spacing: -0.5px;
+          animation: textShine 7s ease-in-out infinite alternate, luxuryTitleReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .contact-subtitle {

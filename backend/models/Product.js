@@ -64,6 +64,14 @@ const productSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    isNewArrival: {
+      type: Boolean,
+      default: false,
+    },
+    isHotSale: {
+      type: Boolean,
+      default: false,
+    },
     combinations: [combinationSchema]
   },
   {

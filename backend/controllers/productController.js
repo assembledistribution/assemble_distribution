@@ -69,7 +69,7 @@ export const getProductById = async (req, res) => {
 // @access  Public
 export const createProduct = async (req, res) => {
   try {
-    const { title, asin, description, shortDescription, price, imageUrl, images, category, stock, hasSizes, sizes, variations, combinations } = req.body;
+    const { title, asin, description, shortDescription, price, imageUrl, images, category, stock, hasSizes, sizes, variations, combinations, isNewArrival, isHotSale } = req.body;
 
     let finalCover = await uploadToCloudinaryIfExternal(imageUrl);
     let rawImages = Array.isArray(images) ? images : (imageUrl ? [imageUrl] : []);
@@ -92,7 +92,9 @@ export const createProduct = async (req, res) => {
       hasSizes,
       sizes,
       variations,
-      combinations
+      combinations,
+      isNewArrival: Boolean(isNewArrival),
+      isHotSale: Boolean(isHotSale)
     });
 
     const createdProduct = await product.save();
@@ -107,7 +109,7 @@ export const createProduct = async (req, res) => {
 // @access  Public
 export const updateProduct = async (req, res) => {
   try {
-    const { title, asin, description, shortDescription, price, imageUrl, images, category, stock, hasSizes, sizes, variations, combinations } = req.body;
+    const { title, asin, description, shortDescription, price, imageUrl, images, category, stock, hasSizes, sizes, variations, combinations, isNewArrival, isHotSale } = req.body;
 
     const product = await Product.findById(req.params.id);
 
@@ -132,6 +134,8 @@ export const updateProduct = async (req, res) => {
       product.sizes = sizes !== undefined ? sizes : product.sizes;
       product.variations = variations !== undefined ? variations : product.variations;
       product.combinations = combinations !== undefined ? combinations : product.combinations;
+      if (isNewArrival !== undefined) product.isNewArrival = Boolean(isNewArrival);
+      if (isHotSale !== undefined) product.isHotSale = Boolean(isHotSale);
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);

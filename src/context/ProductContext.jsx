@@ -24,7 +24,9 @@ const formatProductHd = (p) => {
     id: p._id || p.id,
     imageUrl,
     images,
-    combinations
+    combinations,
+    isNewArrival: Boolean(p.isNewArrival),
+    isHotSale: Boolean(p.isHotSale)
   };
 };
 

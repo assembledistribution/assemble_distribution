@@ -24,10 +24,30 @@ export default function FavoritesPage() {
             >
               <ArrowLeft size={16} /> Continue Shopping
             </Link>
-            <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 36px)', fontWeight: '800', color: 'var(--ink, #1C1C1C)', margin: 0, display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <h1 style={{ 
+              fontSize: 'clamp(26px, 3.5vw, 36px)', 
+              fontWeight: '800', 
+              letterSpacing: '-0.025em',
+              background: 'linear-gradient(135deg, #111827 0%, #1c3d37 40%, #2a9d8f 60%, #111827 100%)',
+              backgroundSize: '250% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              margin: 0, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '12px',
+              animation: 'textShine 7s ease-in-out infinite alternate, luxuryTitleReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) both'
+            }}>
               <span>My Favorites</span>
               {favoritesCount > 0 && (
-                <span style={{ fontSize: '14px', fontWeight: '700', backgroundColor: '#fee2e2', color: '#ef4444', padding: '4px 12px', borderRadius: '20px' }}>
+                <span style={{ 
+                  fontSize: '13px', 
+                  fontWeight: '700', 
+                  backgroundColor: '#fee2e2', 
+                  color: '#ef4444', 
+                  padding: '4px 12px', 
+                  borderRadius: '20px'
+                }}>
                   {favoritesCount} {favoritesCount === 1 ? 'item' : 'items'}
                 </span>
               )}

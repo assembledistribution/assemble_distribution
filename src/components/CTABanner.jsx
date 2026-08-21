@@ -22,8 +22,12 @@ export default function CTABanner() {
             and Garden &amp; Outdoor categories.
           </p>
           <div className="cta-banner__buttons">
-            <Link href="/distributor-signup" className="btn btn--solid" id="cta-distributor-btn">
-              Sign Up For Distributor ↗
+            <Link href="/distributor-signup" className="btn btn--solid btn--slide" id="cta-distributor-btn">
+              <span className="btn__slide-bg" aria-hidden="true">
+                <span className="btn__slide-bg-inner"></span>
+              </span>
+              <span className="btn__slide-txt-default">Sign Up For Distributor ↗</span>
+              <span className="btn__slide-txt-hover">Apply Now ↗</span>
             </Link>
             <Link href="/contact" className="btn btn--outline" id="cta-contact-btn">
               Call us: +1 (800) 555-0192 ↗

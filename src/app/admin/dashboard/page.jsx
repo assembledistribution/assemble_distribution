@@ -50,7 +50,9 @@ function DashboardContent() {
     hasSizes: false,
     sizes: '',
     variations: '',
-    combinations: []
+    combinations: [],
+    isNewArrival: false,
+    isHotSale: false
   });
 
   const [customImageUrl, setCustomImageUrl] = useState('');
@@ -282,6 +284,24 @@ function DashboardContent() {
     router.push('/admin/login');
   };
 
+  // Quick 1-Click Send To Toggle for Homepage Carousels
+  const handleQuickToggleSendTo = async (product, field) => {
+    const prodId = product.id || product._id;
+    const newValue = !Boolean(product[field]);
+    const updatePayload = {
+      ...product,
+      [field]: newValue
+    };
+    
+    const result = await updateProduct(prodId, updatePayload);
+    if (result?.success) {
+      const label = field === 'isNewArrival' ? 'New Arrivals' : 'Hot Sales & Demand';
+      showNotification(newValue ? `✨ Added to ${label} slider!` : `Removed from ${label} slider.`);
+    } else {
+      showNotification('Failed to update product placement in MongoDB', 'error');
+    }
+  };
+
   const handleEditClick = (product) => {
     setEditingId(product.id || product._id);
     const existingImages = Array.isArray(product.images) && product.images.length > 0 
@@ -304,7 +324,9 @@ function DashboardContent() {
         ...c,
         price: c.price !== null && c.price !== undefined ? c.price : '',
         imageUrl: c.imageUrl || ''
-      }))
+      })),
+      isNewArrival: Boolean(product.isNewArrival),
+      isHotSale: Boolean(product.isHotSale)
     });
     setActiveTab('add-product');
   };
@@ -323,7 +345,9 @@ function DashboardContent() {
       hasSizes: false,
       sizes: '',
       variations: '',
-      combinations: []
+      combinations: [],
+      isNewArrival: false,
+      isHotSale: false
     });
     setActiveTab('products');
   };
@@ -362,7 +386,9 @@ function DashboardContent() {
           ...c,
           price: c.price ? parseFloat(c.price) : null,
           imageUrl: c.imageUrl ? c.imageUrl.trim() : ''
-        }))
+        })),
+        isNewArrival: Boolean(newProduct.isNewArrival),
+        isHotSale: Boolean(newProduct.isHotSale)
       };
 
       if (editingId) {
@@ -386,13 +412,15 @@ function DashboardContent() {
         title: '',
         description: '',
         price: '',
-        category: 'apparel',
+        category: 'art-craft',
         imageUrl: '',
         stock: '',
         hasSizes: false,
         sizes: '',
         variations: '',
-        combinations: []
+        combinations: [],
+        isNewArrival: false,
+        isHotSale: false
       });
 
       setActiveTab('products');
@@ -821,13 +849,14 @@ function DashboardContent() {
                     <th style={{ padding: '16px 20px' }}>Category</th>
                     <th style={{ padding: '16px 20px' }}>Price</th>
                     <th style={{ padding: '16px 20px' }}>Variations</th>
-                    <th style={{ padding: '16px 20px', textAlign: 'right', width: '150px' }}>Actions</th>
+                    <th style={{ padding: '16px 20px', minWidth: '170px' }}>Send To / Feature</th>
+                    <th style={{ padding: '16px 20px', textAlign: 'right', width: '130px' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredProducts.length === 0 ? (
                     <tr>
-                      <td colSpan={6} style={{ padding: '48px', textAlign: 'center', color: 'var(--gray, #6B6F6E)' }}>
+                      <td colSpan={7} style={{ padding: '48px', textAlign: 'center', color: 'var(--gray, #6B6F6E)' }}>
                         No products found matching your filters.
                       </td>
                     </tr>
@@ -908,6 +937,57 @@ function DashboardContent() {
                           <td style={{ padding: '14px 20px', color: 'var(--gray, #6B6F6E)', fontSize: '13px' }}>
                             {product.hasSizes && product.sizes?.length > 0 ? `${product.sizes.length} Sizes` : 'Standard'}
                             {product.variations?.length > 0 ? `, ${product.variations.length} Colors` : ''}
+                          </td>
+
+                          {/* Send To / Feature Column */}
+                          <td style={{ padding: '14px 20px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              <button
+                                type="button"
+                                onClick={() => handleQuickToggleSendTo(product, 'isNewArrival')}
+                                title={product.isNewArrival ? "Click to remove from New Arrivals" : "Click to send to New Arrivals"}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '6px',
+                                  padding: '4px 10px',
+                                  borderRadius: '20px',
+                                  fontSize: '11.5px',
+                                  fontWeight: '700',
+                                  cursor: 'pointer',
+                                  border: product.isNewArrival ? '1.5px solid #059669' : '1px solid var(--line, #E7E5E0)',
+                                  backgroundColor: product.isNewArrival ? '#ecfdf5' : '#ffffff',
+                                  color: product.isNewArrival ? '#047857' : 'var(--gray, #6B6F6E)',
+                                  transition: 'all 0.2s ease',
+                                  width: 'fit-content'
+                                }}
+                              >
+                                <span>{product.isNewArrival ? '✓ ✨ New Arrival' : '+ ✨ New Arrival'}</span>
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => handleQuickToggleSendTo(product, 'isHotSale')}
+                                title={product.isHotSale ? "Click to remove from Hot Sales" : "Click to send to Hot Sales"}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '6px',
+                                  padding: '4px 10px',
+                                  borderRadius: '20px',
+                                  fontSize: '11.5px',
+                                  fontWeight: '700',
+                                  cursor: 'pointer',
+                                  border: product.isHotSale ? '1.5px solid #ea580c' : '1px solid var(--line, #E7E5E0)',
+                                  backgroundColor: product.isHotSale ? '#fff7ed' : '#ffffff',
+                                  color: product.isHotSale ? '#c2410c' : 'var(--gray, #6B6F6E)',
+                                  transition: 'all 0.2s ease',
+                                  width: 'fit-content'
+                                }}
+                              >
+                                <span>{product.isHotSale ? '✓ 🔥 Hot Sale' : '+ 🔥 Hot Sale'}</span>
+                              </button>
+                            </div>
                           </td>
 
                           {/* Actions Column */}
@@ -1092,6 +1172,74 @@ function DashboardContent() {
                       </select>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Box 1.5: Send To / Featured Homepage Placement */}
+              <div style={{ backgroundColor: '#ffffff', border: '1px solid var(--line, #E7E5E0)', borderRadius: 'var(--radius-md, 16px)', padding: '28px', boxShadow: '0 6px 20px rgba(0,0,0,0.03)' }}>
+                <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--teal, #1C5C53)', marginTop: 0, marginBottom: '16px', borderBottom: '1px solid var(--line, #E7E5E0)', paddingBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Layers size={18} /> Send To / Homepage Placement
+                </h3>
+                <p style={{ color: 'var(--gray, #6B6F6E)', fontSize: '13px', marginTop: 0, marginBottom: '18px' }}>
+                  Select which homepage carousels this product should appear in:
+                </p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' }}>
+                  {/* New Arrivals Checkbox Card */}
+                  <label style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    padding: '16px 18px',
+                    borderRadius: '12px',
+                    border: `1.5px solid ${newProduct.isNewArrival ? 'var(--teal, #1C5C53)' : 'var(--line, #E7E5E0)'}`,
+                    backgroundColor: newProduct.isNewArrival ? '#e6f2f0' : 'var(--cream, #FBFAF8)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(newProduct.isNewArrival)}
+                      onChange={e => setNewProduct({...newProduct, isNewArrival: e.target.checked})}
+                      style={{ width: '18px', height: '18px', accentColor: 'var(--teal, #1C5C53)', marginTop: '2px', cursor: 'pointer' }}
+                    />
+                    <div>
+                      <span style={{ display: 'block', fontWeight: '700', fontSize: '14px', color: 'var(--ink, #1C1C1C)' }}>
+                        ✨ New Arrivals Slider
+                      </span>
+                      <span style={{ fontSize: '12px', color: 'var(--gray, #6B6F6E)', marginTop: '2px', display: 'block' }}>
+                        Feature in top New Arrivals 10-product carousel
+                      </span>
+                    </div>
+                  </label>
+
+                  {/* Hot Sales / High Demand Checkbox Card */}
+                  <label style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    padding: '16px 18px',
+                    borderRadius: '12px',
+                    border: `1.5px solid ${newProduct.isHotSale ? '#ea580c' : 'var(--line, #E7E5E0)'}`,
+                    backgroundColor: newProduct.isHotSale ? '#fff7ed' : 'var(--cream, #FBFAF8)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(newProduct.isHotSale)}
+                      onChange={e => setNewProduct({...newProduct, isHotSale: e.target.checked})}
+                      style={{ width: '18px', height: '18px', accentColor: '#ea580c', marginTop: '2px', cursor: 'pointer' }}
+                    />
+                    <div>
+                      <span style={{ display: 'block', fontWeight: '700', fontSize: '14px', color: 'var(--ink, #1C1C1C)' }}>
+                        🔥 Hot Sales & Top Demand Slider
+                      </span>
+                      <span style={{ fontSize: '12px', color: 'var(--gray, #6B6F6E)', marginTop: '2px', display: 'block' }}>
+                        Feature in High Demand carousel below Trusted Brands
+                      </span>
+                    </div>
+                  </label>
                 </div>
               </div>
 

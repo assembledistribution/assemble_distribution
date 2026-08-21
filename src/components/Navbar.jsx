@@ -133,7 +133,11 @@ export default function Navbar() {
         {/* ── Right: Distributor + Search + Cart (desktop) ── */}
         <div className="navbar__right">
           <Link href="/distributor-signup" className="navbar__cta navbar__cta--desktop" id="navbar-distributor-btn">
-            Sign Up For Distributor
+            <span className="navbar__cta-bg" aria-hidden="true">
+              <span className="navbar__cta-bg-inner"></span>
+            </span>
+            <span className="navbar__cta-txt-default">Sign Up For Distributor</span>
+            <span className="navbar__cta-txt-hover">Apply Now ↗</span>
           </Link>
 
           <div style={{ position: 'relative' }} ref={searchRef}>
@@ -286,7 +290,11 @@ export default function Navbar() {
         </div>
 
         <Link href="/distributor-signup" className="navbar__cta navbar__cta--mobile" onClick={closeMobile} id="mobile-distributor-btn">
-          Sign Up For Distributor
+          <span className="navbar__cta-bg" aria-hidden="true">
+            <span className="navbar__cta-bg-inner"></span>
+          </span>
+          <span className="navbar__cta-txt-default">Sign Up For Distributor</span>
+          <span className="navbar__cta-txt-hover">Apply Now ↗</span>
         </Link>
       </div>
     </nav>

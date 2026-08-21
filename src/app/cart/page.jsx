@@ -15,7 +15,18 @@ export default function CartPage() {
       <Navbar />
       <div className="cart-page section" style={{ backgroundColor: 'var(--cream)', minHeight: '80vh', paddingTop: '60px' }}>
         <div className="container" style={{ maxWidth: '1200px' }}>
-          <h1 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '40px', color: 'var(--ink)' }}>Cart</h1>
+          <h1 style={{ 
+            fontSize: 'clamp(28px, 4vw, 40px)', 
+            fontWeight: '800', 
+            marginBottom: '40px', 
+            letterSpacing: '-0.025em',
+            background: 'linear-gradient(135deg, #111827 0%, #1c3d37 40%, #2a9d8f 60%, #111827 100%)',
+            backgroundSize: '250% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            display: 'inline-block',
+            animation: 'textShine 7s ease-in-out infinite alternate, luxuryTitleReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) both'
+          }}>Cart</h1>
           
           {cartItems.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px', backgroundColor: '#fff', borderRadius: 'var(--radius-lg)', border: '1px solid var(--line)' }}>

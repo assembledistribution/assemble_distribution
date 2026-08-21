@@ -1,7 +1,9 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import NewArrivals from '@/components/NewArrivals';
 import Categories from '@/components/Categories';
 import LogoCarousel from '@/components/LogoCarousel';
+import HotSales from '@/components/HotSales';
 import CTABanner from '@/components/CTABanner';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
@@ -19,7 +21,9 @@ export default function HomePage() {
       <main>
         <Hero />
         <Categories />
+        <NewArrivals />
         <LogoCarousel />
+        <HotSales />
         <CTABanner />
         <FAQ />
       </main>

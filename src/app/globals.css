@@ -81,13 +81,18 @@ button {
 }
 
 .eyebrow {
-  display: inline-block;
-  font-size: 18px;
+  display: block;
+  font-size: 13px;
   font-weight: 800;
-  color: var(--teal);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 12px;
+  letter-spacing: 2.5px;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #1C5C53 0%, #2e8b7c 50%, #1C5C53 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShine 4s linear infinite, luxuryEyebrowSlide 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: letter-spacing 0.3s ease;
 }
 
 .section-intro {
@@ -100,12 +105,12 @@ button {
 
 .section-intro__left {
   flex: 0 0 auto;
-  max-width: 420px;
+  max-width: 440px;
 }
 
 .section-intro__right {
   flex: 1;
-  max-width: 420px;
+  max-width: 440px;
   font-size: 14px;
   color: var(--gray);
   line-height: 1.7;
@@ -113,10 +118,22 @@ button {
 }
 
 .section-h2 {
-  font-size: clamp(26px, 3vw, 34px);
-  font-weight: 600;
-  color: var(--ink);
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #111827 0%, #1c3d37 40%, #2a9d8f 60%, #111827 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   line-height: 1.25;
+  animation: textShine 7s ease-in-out infinite alternate, luxuryTitleReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.3s ease;
+  display: inline-block;
+}
+
+.section-h2:hover {
+  transform: translateY(-2px);
+  letter-spacing: -0.015em;
 }
 
 /* ===== BUTTON ===== */
@@ -141,6 +158,85 @@ button {
 .btn--solid:hover {
   background: var(--teal-dark);
   border-color: var(--teal-dark);
+}
+
+/* ── Sliding Button Hover Effect (like Product Card) ── */
+.btn--slide {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 30px;
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.btn--slide:hover {
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+.btn__slide-bg {
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 200%;
+  height: 100%;
+  background-color: var(--teal-dark, #134943);
+  transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.btn__slide-bg-inner {
+  display: block;
+  width: 50%;
+  height: 100%;
+  background-color: #0c332e;
+}
+
+.btn--slide:hover .btn__slide-bg {
+  left: 0px;
+}
+
+.btn__slide-txt-default {
+  position: relative;
+  z-index: 2;
+  transition: all 500ms cubic-bezier(0, 0, 0.18, 1);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.btn--slide:hover .btn__slide-txt-default {
+  transform: translateX(-40px);
+  opacity: 0;
+}
+
+.btn__slide-txt-hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(40px, -50%);
+  opacity: 0;
+  z-index: 2;
+  transition: all 500ms cubic-bezier(0, 0, 0.18, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn--slide:hover .btn__slide-txt-hover {
+  transform: translate(-50%, -50%);
+  opacity: 1;
 }
 
 .btn--outline {
@@ -239,24 +335,90 @@ button {
 }
 
 .navbar__cta {
+  position: relative;
+  overflow: hidden;
   background: var(--teal);
   color: #fff;
   border-radius: var(--radius-pill);
-  padding: 10px 22px;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s;
+  height: 42px;
+  padding: 0 24px;
+  font-size: 13.5px;
+  font-weight: 700;
   border: none;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   font-family: var(--font);
   white-space: nowrap;
+  box-shadow: none;
+  transition: transform 0.3s ease;
 }
 
 .navbar__cta:hover {
-  background: var(--teal-dark);
+  box-shadow: none;
+  transform: translateY(-1px);
+}
+
+/* ── Navbar CTA Background Slide Effect (Exact Product Card Feel) ── */
+.navbar__cta-bg {
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 200%;
+  height: 100%;
+  background-color: var(--teal-dark, #134943);
+  transition: all 600ms cubic-bezier(0, 0, 0.18, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.navbar__cta-bg-inner {
+  display: block;
+  width: 50%;
+  height: 100%;
+  background-color: #0c332e;
+}
+
+.navbar__cta:hover .navbar__cta-bg {
+  left: 0px;
+}
+
+/* Default text (slides left on hover) */
+.navbar__cta-txt-default {
+  position: relative;
+  z-index: 2;
+  transition: all 500ms cubic-bezier(0, 0, 0.18, 1);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.navbar__cta:hover .navbar__cta-txt-default {
+  transform: translateX(-40px);
+  opacity: 0;
+}
+
+/* Hover text (slides in from right on hover) */
+.navbar__cta-txt-hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(40px, -50%);
+  opacity: 0;
+  z-index: 2;
+  transition: all 500ms cubic-bezier(0, 0, 0.18, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  color: #fff;
+  font-weight: 700;
+}
+
+.navbar__cta:hover .navbar__cta-txt-hover {
+  transform: translate(-50%, -50%);
+  opacity: 1;
 }
 
 /* ── Navbar Right (search + cart + CTA) ── */
@@ -598,13 +760,14 @@ button {
 }
 
 .hero__eyebrow {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 600;
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 10px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 12px;
+  animation: luxuryEyebrowSlide 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .hero__h1 {
@@ -642,8 +805,12 @@ button {
 
 /* ── "Distribution" teal highlight ── */
 .hero__word--teal {
-  color: #52b788;
-  /* lighter teal — readable on dark overlay */
+  display: inline-block;
+  background: linear-gradient(135deg, #52b788 0%, #a7f3d0 50%, #34d399 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShine 4s ease-in-out infinite alternate, heroGlow 3s ease-in-out infinite alternate;
 }
 
 /* ── Fold-in animation ── */
@@ -1478,6 +1645,106 @@ button {
   }
 }
 
+/* ===== HORIZONTAL PRODUCT SLIDERS (New Arrivals & Hot Sales) ===== */
+.product-slider-section {
+  padding: 40px 0 50px;
+  position: relative;
+  border-bottom: 1px solid var(--line, #E7E5E0);
+}
+
+.product-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.product-slider-nav-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.product-slider-desc {
+  margin-bottom: 0 !important;
+  max-width: 440px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--gray, #6B6F6E);
+}
+
+.product-slider-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.product-slider-track-wrap {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.product-slider-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 4px 20px;
+}
+
+.product-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.product-slider-card {
+  flex: 0 0 280px;
+  max-width: 320px;
+  scroll-snap-align: start;
+}
+
+.product-slider-card .el-wrapper {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .product-slider-section {
+    padding: 30px 0 40px;
+  }
+
+  .product-slider-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+  }
+
+  .product-slider-nav-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .product-slider-desc {
+    display: none;
+  }
+
+  .product-slider-card {
+    flex: 0 0 195px;
+    max-width: 210px;
+  }
+
+  .product-slider-card .el-wrapper .box-up {
+    height: 140px !important;
+  }
+}
+
 /* ===== SHOP & PRODUCT CARD ===== */
 .products-grid {
   display: grid;
@@ -1489,14 +1756,37 @@ button {
 
 .shop-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.shop-header .eyebrow {
+  display: block;
+  margin-bottom: 4px;
 }
 
 .shop-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--ink);
+  font-size: clamp(32px, 4.5vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, #111827 0%, #1c3d37 40%, #2a9d8f 60%, #111827 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-transform: capitalize;
+  display: inline-block;
+  margin: 0;
+  animation: textShine 7s ease-in-out infinite alternate, luxuryTitleReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.3s ease;
+}
+
+.shop-title:hover {
+  transform: translateY(-2px);
+  letter-spacing: -0.015em;
 }
 
 /* Product Card */
@@ -1836,5 +2126,72 @@ button {
     left: 14px !important;
     width: auto !important;
     max-width: 100% !important;
+  }
+}
+
+/* ===== HEADING REVEAL, GRADIENT SHINE & TEXT ANIMATIONS ===== */
+@keyframes textShine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes luxuryTitleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes luxuryEyebrowSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+    letter-spacing: 1px;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 2.5px;
+  }
+}
+
+@keyframes heroGlow {
+  0% {
+    filter: drop-shadow(0 0 10px rgba(82, 183, 136, 0.4));
+  }
+  100% {
+    filter: drop-shadow(0 0 24px rgba(82, 183, 136, 0.85));
+  }
+}
+
+@keyframes headingReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes eyebrowExpand {
+  0% {
+    opacity: 0;
+    letter-spacing: 1px;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 2.5px;
+    transform: translateY(0);
   }
 }

@@ -26,8 +26,12 @@ export default function Hero() {
             Toys &amp; Games, and Garden &amp; Outdoor products — delivered fast, priced right.
           </p>
 
-          <Link href="/shop" className="btn btn--solid hero__fold hero__fold--4" id="hero-shop-btn">
-            Shop Now ↗
+          <Link href="/shop" className="btn btn--solid btn--slide hero__fold hero__fold--4" id="hero-shop-btn">
+            <span className="btn__slide-bg" aria-hidden="true">
+              <span className="btn__slide-bg-inner"></span>
+            </span>
+            <span className="btn__slide-txt-default">Shop Now ↗</span>
+            <span className="btn__slide-txt-hover">Explore Products →</span>
           </Link>
         </div>
       </div>
