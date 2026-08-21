@@ -7,13 +7,15 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
-import { ArrowLeft, ShoppingCart, Truck, Check, Package, Loader2 } from 'lucide-react';
+import { useFavorites } from '@/context/FavoritesContext';
+import { ArrowLeft, ShoppingCart, Truck, Check, Package, Loader2, Heart } from 'lucide-react';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
   const router = useRouter();
   const { products, loading } = useProducts();
   const { addToCart } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   // ALL hooks MUST be declared unconditionally at top level
   const [added, setAdded] = useState(false);
@@ -151,7 +153,27 @@ export default function ProductDetailPage() {
           <div className="product-detail-grid">
             {/* Left Image Showcase Column */}
             <div className="product-image-section">
-              <div className="product-image-container">
+              <div className="product-image-container" style={{ position: 'relative' }}>
+                {/* Heart Favorite Button */}
+                <button
+                  type="button"
+                  className={`product-heart-btn ${isFavorite(product?.id || product?._id) ? 'active' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleFavorite(product);
+                  }}
+                  aria-label={isFavorite(product?.id || product?._id) ? "Remove from favorites" : "Add to favorites"}
+                  title={isFavorite(product?.id || product?._id) ? "Remove from favorites" : "Add to favorites"}
+                  style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 10 }}
+                >
+                  <Heart 
+                    size={22} 
+                    fill={isFavorite(product?.id || product?._id) ? "#ef4444" : "rgba(255,255,255,0.7)"} 
+                    color={isFavorite(product?.id || product?._id) ? "#ef4444" : "var(--ink, #1C1C1C)"} 
+                    className={`heart-icon ${isFavorite(product?.id || product?._id) ? 'heart-glow' : ''}`}
+                  />
+                </button>
+
                 <img 
                   src={activeMainImage} 
                   alt={product.title || 'Product Image'} 
@@ -252,10 +274,11 @@ export default function ProductDetailPage() {
                 </div>
               )}
 
-              {/* Add to Cart Actions */}
-              <div className="product-actions">
+              {/* Add to Cart & Favorite Actions */}
+              <div className="product-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                 <button
                   className={`cart-action-btn ${added ? 'added' : ''}`}
+                  style={{ flex: 1 }}
                   onClick={() => {
                     addToCart(product, selectedSize, selectedVariation, 1, activePrice);
                     setAdded(true);
@@ -264,6 +287,33 @@ export default function ProductDetailPage() {
                 >
                   {added ? <Check size={20} /> : <ShoppingCart size={20} />}
                   <span>{added ? 'Added to Cart!' : 'Add to Cart'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => toggleFavorite(product)}
+                  className={`product-heart-btn ${isFavorite(product?.id || product?._id) ? 'active' : ''}`}
+                  style={{ 
+                    position: 'static', 
+                    width: '52px', 
+                    height: '52px', 
+                    borderRadius: 'var(--radius-pill, 30px)',
+                    border: '1.5px solid var(--line, #E7E5E0)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    backgroundColor: isFavorite(product?.id || product?._id) ? '#fee2e2' : '#ffffff',
+                    transition: 'all 0.25s ease'
+                  }}
+                  title={isFavorite(product?.id || product?._id) ? "Remove from Favorites" : "Add to Favorites"}
+                >
+                  <Heart 
+                    size={22} 
+                    fill={isFavorite(product?.id || product?._id) ? "#ef4444" : "none"} 
+                    color={isFavorite(product?.id || product?._id) ? "#ef4444" : "var(--ink, #1C1C1C)"} 
+                    className={`heart-icon ${isFavorite(product?.id || product?._id) ? 'heart-glow' : ''}`}
+                  />
                 </button>
               </div>
 

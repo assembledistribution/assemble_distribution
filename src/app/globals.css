@@ -1732,4 +1732,109 @@ button {
   .cart .add-to-cart .txt {
     font-size: 11px !important;
   }
+
+  .product-heart-btn {
+    width: 28px !important;
+    height: 28px !important;
+    top: 6px !important;
+    right: 6px !important;
+  }
+
+  .product-heart-btn svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+}
+
+/* ===== FAVORITE HEART BUTTON & GLOW ANIMATIONS ===== */
+.product-heart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid var(--line, #E7E5E0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.product-heart-btn:hover {
+  transform: scale(1.15);
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+  border-color: #fca5a5;
+}
+
+.product-heart-btn.active {
+  background: #fff;
+  border-color: #fecaca;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.heart-icon {
+  transition: all 0.25s ease;
+}
+
+.heart-glow {
+  filter: drop-shadow(0 0 7px rgba(239, 68, 68, 0.75));
+  animation: heartPulse 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPulse {
+  0% {
+    transform: scale(0.7);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes heartPop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ===== TOAST NOTIFICATION ANIMATION ===== */
+@keyframes toastSlideIn {
+  0% {
+    transform: translateY(-20px) scale(0.92);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.cart--added .price {
+  color: var(--teal, #1C5C53) !important;
+  font-weight: 800 !important;
+}
+
+@media (max-width: 640px) {
+  .toast-container {
+    top: 14px !important;
+    right: 14px !important;
+    left: 14px !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
 }

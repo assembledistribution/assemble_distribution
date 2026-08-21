@@ -4,8 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useFavorites } from '@/context/FavoritesContext';
 
-import { ShoppingCart, Search } from 'lucide-react';
+import { ShoppingCart, Search, Heart } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const categories = [
@@ -31,6 +32,7 @@ export default function Navbar() {
   const searchRef = useRef(null);
   const router = useRouter();
   const { cartCount } = useCart();
+  const { favoritesCount } = useFavorites();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -160,6 +162,23 @@ export default function Navbar() {
             )}
           </div>
 
+          {/* Dynamic Favorite Icon — only appears when user has favorites */}
+          {favoritesCount > 0 && (
+            <Link 
+              href="/favorites" 
+              className="navbar__cart navbar__favorite-btn" 
+              aria-label="Favorite items" 
+              id="navbar-favorites-btn" 
+              title="My Favorites" 
+              style={{ position: 'relative', color: '#ef4444', animation: 'heartPop 0.3s ease' }}
+            >
+              <Heart size={20} fill="#ef4444" color="#ef4444" />
+              <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: '#ef4444', color: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 'bold', boxShadow: '0 2px 6px rgba(239, 68, 68, 0.4)' }}>
+                {favoritesCount}
+              </span>
+            </Link>
+          )}
+
           <Link href="/cart" className="navbar__cart" aria-label="Shopping cart" id="navbar-cart-btn" title="Shopping Cart" style={{ position: 'relative' }}>
             <ShoppingCart size={20} />
             {cartCount > 0 && (
@@ -239,6 +258,23 @@ export default function Navbar() {
               <circle cx="8" cy="8" r="5.5"/><line x1="12" y1="12" x2="16" y2="16"/>
             </svg>
           </button>
+          {/* Mobile Favorite Icon */}
+          {favoritesCount > 0 && (
+            <Link 
+              href="/favorites" 
+              className="navbar__cart" 
+              aria-label="Favorites" 
+              id="mobile-favorites-btn" 
+              onClick={closeMobile} 
+              style={{ position: 'relative', color: '#ef4444' }}
+            >
+              <Heart size={20} fill="#ef4444" color="#ef4444" />
+              <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: '#ef4444', color: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 'bold' }}>
+                {favoritesCount}
+              </span>
+            </Link>
+          )}
+
           <Link href="/cart" className="navbar__cart" aria-label="Cart" id="mobile-cart-btn" onClick={closeMobile} style={{ position: 'relative' }}>
             <ShoppingCart size={20} />
             {cartCount > 0 && (

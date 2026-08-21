@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useFavorites } from '@/context/FavoritesContext';
 import { getHighResImageUrl } from '@/utils/api';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Heart, Check } from 'lucide-react';
 
 export default function ProductCard({ product }) {
   const displaySizes = product.hasSizes && product.sizes && product.sizes.length > 0 
@@ -18,8 +19,13 @@ export default function ProductCard({ product }) {
 
   const hasVariations = product.variations && product.variations.length > 0;
   
+  const [added, setAdded] = useState(false);
   const router = useRouter();
   const { addToCart } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
+
+  const prodId = product.id || product._id;
+  const favorited = isFavorite(prodId);
 
   let minPrice = parseFloat(product.price);
   if (isNaN(minPrice)) minPrice = 0;
@@ -50,7 +56,27 @@ export default function ProductCard({ product }) {
   return (
     <div className="el-wrapper">
       <div className="box-up">
-        <Link href={`/product/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        {/* Heart Favorite Button */}
+        <button
+          type="button"
+          className={`product-heart-btn ${favorited ? 'active' : ''}`}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(product);
+          }}
+          aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+          title={favorited ? "Remove from favorites" : "Add to favorites"}
+        >
+          <Heart 
+            size={18} 
+            fill={favorited ? "#ef4444" : "rgba(255,255,255,0.6)"} 
+            color={favorited ? "#ef4444" : "var(--ink, #1C1C1C)"} 
+            className={`heart-icon ${favorited ? 'heart-glow' : ''}`}
+          />
+        </button>
+
+        <Link href={`/product/${product.id || product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
           <img 
             className="img" 
             src={highResImage || null} 
@@ -100,21 +126,27 @@ export default function ProductCard({ product }) {
         </div>
 
         <button 
-          className="cart" 
+          className={`cart ${added ? 'cart--added' : ''}`} 
           onClick={(e) => {
             e.preventDefault();
             if (product.hasSizes || hasVariations) {
-              router.push(`/product/${product.id}`);
+              router.push(`/product/${product.id || product._id}`);
             } else {
               addToCart(product, null, null, 1, minPrice);
+              setAdded(true);
+              setTimeout(() => setAdded(false), 2000);
             }
           }}
         >
-          <span className="price">{actionText}</span>
+          <span className="price">{added ? '✓ Added!' : actionText}</span>
           <span className="add-to-cart">
             <span className="txt">
-              <ShoppingCart size={15} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
-              {actionText}
+              {added ? (
+                <Check size={15} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+              ) : (
+                <ShoppingCart size={15} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+              )}
+              {added ? 'Added to Cart!' : actionText}
             </span>
           </span>
         </button>

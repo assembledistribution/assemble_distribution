@@ -1,12 +1,14 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from './ToastContext';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [hasInitialized, setHasInitialized] = useState(false);
+  const { showToast } = useToast();
 
   // Initialize cart items from localStorage on mount (client-only)
   useEffect(() => {
@@ -26,9 +28,12 @@ export function CartProvider({ children }) {
   }, [cartItems, hasInitialized]);
 
   const addToCart = (product, selectedSize, selectedVariation, quantity = 1, price = null) => {
+    if (!product) return;
+    const prodId = product.id || product._id;
+
     setCartItems(prev => {
       const existingItemIndex = prev.findIndex(
-        item => item.id === product.id && 
+        item => item.id === prodId && 
                 item.size === selectedSize && 
                 item.variation === selectedVariation
       );
@@ -41,7 +46,7 @@ export function CartProvider({ children }) {
       } else {
         // Add new item
         return [...prev, {
-          id: product.id,
+          id: prodId,
           title: product.title,
           imageUrl: product.imageUrl,
           size: selectedSize,
@@ -50,6 +55,15 @@ export function CartProvider({ children }) {
           quantity: quantity
         }];
       }
+    });
+
+    showToast({
+      type: 'cart',
+      title: 'Added to Cart!',
+      message: product.title,
+      imageUrl: product.imageUrl,
+      link: '/cart',
+      linkText: 'View Cart'
     });
   };
 
