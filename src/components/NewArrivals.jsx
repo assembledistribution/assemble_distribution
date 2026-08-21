@@ -11,12 +11,8 @@ export default function NewArrivals() {
     return null;
   }
 
-  // 1. Get explicitly marked new arrival products
-  const explicitNew = products.filter(p => p.isNewArrival);
-
-  // 2. If fewer than 10, fill up to 10 items from newest additions
-  const remaining = products.filter(p => !p.isNewArrival);
-  const newArrivalList = [...explicitNew, ...remaining].slice(0, 10);
+  // Only get products explicitly assigned to New Arrivals from the Admin Panel
+  const newArrivalList = (products || []).filter(p => Boolean(p.isNewArrival));
 
   if (newArrivalList.length === 0) {
     return null;

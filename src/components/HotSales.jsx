@@ -11,12 +11,8 @@ export default function HotSales() {
     return null;
   }
 
-  // 1. Get explicitly marked hot sale products
-  const explicitHot = products.filter(p => p.isHotSale);
-
-  // 2. If fewer than 10, fill up to 10 items from top products
-  const remaining = products.filter(p => !p.isHotSale);
-  const hotSaleList = [...explicitHot, ...remaining].slice(0, 10);
+  // Only get products explicitly assigned to Hot Sales from the Admin Panel
+  const hotSaleList = (products || []).filter(p => Boolean(p.isHotSale));
 
   if (hotSaleList.length === 0) {
     return null;
