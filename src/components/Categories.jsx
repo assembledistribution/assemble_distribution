@@ -50,7 +50,7 @@ const categories = [
   {
     id: 'sports-outdoors',
     label: 'Sports and Outdoors',
-    img: 'https://images.unsplash.com/photo-1517649763962-0c623266ddc0?w=800&q=80&auto=format&fit=crop',
+    img: 'https://images.unsplash.com/photo-1596274646574-266971f0dfad?w=800&auto=format&fit=crop&q=80',
     alt: 'Sports equipment, fitness gear and outdoor activities',
   },
   {
