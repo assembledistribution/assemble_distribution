@@ -21,6 +21,7 @@ const categories = [
   { id: 'sports-outdoors', label: 'Sports and Outdoors' },
   { id: 'industrial-scientific', label: 'Industrial and Scientific' },
   { id: 'automotive-parts-accessories', label: 'Automotive Parts and Accessories' },
+  { id: 'pet-supplies', label: 'Pet Supplies' },
 ];
 
 export default function Navbar() {

@@ -27,6 +27,7 @@ export default function ShopCategoryPage() {
     'sports-outdoors': 'Sports and Outdoors',
     'industrial-scientific': 'Industrial and Scientific',
     'automotive-parts-accessories': 'Automotive Parts and Accessories',
+    'pet-supplies': 'Pet Supplies',
   };
 
   const categoryTitle = category ? (categoryTitleMap[category] || category.replace(/-/g, ' ')) : 'All Products';

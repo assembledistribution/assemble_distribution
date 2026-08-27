@@ -10,6 +10,7 @@ const categoryTitleMap = {
   'sports-outdoors': 'Sports & Outdoors',
   'industrial-scientific': 'Industrial & Scientific',
   'automotive-parts-accessories': 'Automotive Parts & Accessories',
+  'pet-supplies': 'Pet Supplies',
 };
 
 export async function generateMetadata({ params }) {

@@ -809,6 +809,7 @@ function DashboardContent() {
                   <option value="sports-outdoors">Sports & Outdoors</option>
                   <option value="industrial-scientific">Industrial & Scientific</option>
                   <option value="automotive-parts-accessories">Automotive Parts & Accessories</option>
+                  <option value="pet-supplies">Pet Supplies</option>
                 </select>
 
                 {(searchQuery || categoryFilter !== 'all') && (
@@ -923,6 +924,7 @@ function DashboardContent() {
                                    'sports-outdoors': 'Sports & Outdoors',
                                    'industrial-scientific': 'Industrial & Scientific',
                                    'automotive-parts-accessories': 'Automotive Parts & Accessories',
+                                   'pet-supplies': 'Pet Supplies',
                                  }[product.category] || (product.category || '').replace(/-/g, ' ')
                                }
                             </span>
@@ -1169,6 +1171,7 @@ function DashboardContent() {
                         <option value="sports-outdoors">Sports and Outdoors</option>
                         <option value="industrial-scientific">Industrial and Scientific</option>
                         <option value="automotive-parts-accessories">Automotive Parts and Accessories</option>
+                        <option value="pet-supplies">Pet Supplies</option>
                       </select>
                     </div>
                   </div>

@@ -11,6 +11,7 @@ const CATEGORIES = [
   'sports-outdoors',
   'industrial-scientific',
   'automotive-parts-accessories',
+  'pet-supplies',
 ];
 
 export default async function sitemap() {

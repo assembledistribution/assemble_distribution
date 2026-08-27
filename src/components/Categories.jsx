@@ -65,6 +65,12 @@ const categories = [
     img: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80&auto=format&fit=crop',
     alt: 'Automotive parts, car accessories and maintenance supplies',
   },
+  {
+    id: 'pet-supplies',
+    label: 'Pet Supplies',
+    img: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800&q=80&auto=format&fit=crop',
+    alt: 'Pet supplies, pet food, toys, grooming and accessories',
+  },
 ];
 
 export default function Categories() {
