@@ -62,13 +62,13 @@ export default function Footer() {
             <ul className="footer-links-list footer-contact-list">
               <li>
                 <a href="mailto:support@assembledistribution.com" className="contact-item" id="footer-contact-email">
-                  <Mail size={15} className="contact-icon" />
+                  <Mail size={16} className="contact-icon" style={{ marginRight: '10px', flexShrink: 0 }} />
                   <span>support@assembledistribution.com</span>
                 </a>
               </li>
               <li>
                 <a href="tel:+18005550192" className="contact-item" id="footer-contact-phone">
-                  <Phone size={15} className="contact-icon" />
+                  <Phone size={16} className="contact-icon" style={{ marginRight: '10px', flexShrink: 0 }} />
                   <span>+1 (800) 555-0192</span>
                 </a>
               </li>
@@ -179,14 +179,14 @@ export default function Footer() {
         }
 
         .footer-contact-list {
-          gap: 14px;
+          gap: 16px;
         }
 
-        .contact-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-size: 13px;
+        .footer-contact-list .contact-item {
+          display: flex !important;
+          align-items: center !important;
+          gap: 12px !important;
+          font-size: 13.5px;
           color: rgba(255, 255, 255, 0.75);
           text-decoration: none;
           line-height: 1.4;
@@ -198,7 +198,7 @@ export default function Footer() {
           flex-shrink: 0;
         }
 
-        .contact-item:hover {
+        .footer-contact-list .contact-item:hover {
           color: #ffffff;
           transform: translateX(3px);
         }
