@@ -3,8 +3,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Terms & Conditions — Assemble Distribution',
-  description: 'Terms and Conditions for Assemble Distribution wholesale platform.',
+  title: 'Terms & Conditions | Assemble Distribution USA',
+  description: 'Terms and Conditions for Assemble Distribution wholesale platform and B2B ordering across the United States.',
+  alternates: {
+    canonical: '/terms',
+  },
 };
 
 export default function TermsPage() {

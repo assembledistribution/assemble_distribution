@@ -3,8 +3,11 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Privacy Policy — Assemble Distribution',
-  description: 'Privacy Policy for Assemble Distribution wholesale platform.',
+  title: 'Privacy Policy | Assemble Distribution USA',
+  description: 'Privacy Policy for Assemble Distribution wholesale platform and data protection for USA business partners.',
+  alternates: {
+    canonical: '/privacy',
+  },
 };
 
 export default function PrivacyPage() {

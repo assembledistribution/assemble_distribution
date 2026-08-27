@@ -5,8 +5,17 @@ import Footer from '@/components/Footer';
 import Stats from '@/components/Stats';
 
 export const metadata = {
-  title: 'Our Story — Assemble Distribution',
-  description: 'Learn about Assemble Distribution — our story, values, and commitment to delivering quality wholesale products.',
+  title: 'About Us | USA B2B Wholesale Distribution',
+  description:
+    'Learn about Assemble Distribution — our story, manufacturer vetting standards, and commitment to supplying USA retail businesses with dependable wholesale merchandise.',
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    title: 'About Assemble Distribution — USA Wholesale Partner',
+    description: 'Connecting USA retailers and businesses with direct wholesale inventory, fast freight logistics, and verified manufacturer supply.',
+    url: '/about',
+  },
 };
 
 export default function AboutPage() {

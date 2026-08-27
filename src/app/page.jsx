@@ -9,9 +9,18 @@ import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: 'Assemble Distribution — Wholesale Products',
+  title: 'Assemble Distribution | USA Wholesale Distributor & B2B Supply',
   description:
-    'Your trusted wholesale distributor for Art, Craft and Sewing, Toys and Games, Garden and Outdoor products — delivered fast, priced right.',
+    'Your trusted USA wholesale distributor for Art, Craft & Sewing, Toys & Games, Home & Kitchen, Garden & Outdoor products — delivered fast across the US with wholesale tier pricing.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Assemble Distribution — Direct Wholesale Products in USA',
+    description:
+      'Buy wholesale in bulk directly from top manufacturers. Sourcing Art, Craft, Toys, Games, Garden, Tools & Home products for US retailers.',
+    url: '/',
+  },
 };
 
 export default function HomePage() {
@@ -31,4 +40,3 @@ export default function HomePage() {
     </>
   );
 }
-// Trigger HMR update
