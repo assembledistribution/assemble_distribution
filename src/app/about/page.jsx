@@ -45,15 +45,15 @@ export default function AboutPage() {
           <div className="container">
             <div className="about__grid">
               <div className="about__text">
-                <span className="eyebrow">The Journey</span>
-                <h2 className="about__h2">Driven by quality. Defined by trust.</h2>
+                <span className="eyebrow">Our Mission</span>
+                <h2 className="about__h2">Direct manufacturer sourcing. Reliable wholesale supply.</h2>
                 <p className="about__p">
-                  Since our inception, we have been obsessed with sourcing only the highest quality products. We understand that our retail partners rely on us to stock their shelves with items that their customers will love, which is why we rigorously vet every manufacturer we work with.
+                  Assemble Distribution was founded to give retailers, online sellers, and regional shops a dependable source for high-demand wholesale inventory. We work directly with certified manufacturers to keep our catalog authentic, in-stock, and priced for healthy retail margins.
                 </p>
                 <p className="about__p">
-                  But it&apos;s not just about the products. It&apos;s about the technology. We built this platform from the ground up to eliminate the friction typically associated with B2B purchasing. From real-time inventory tracking to flexible bulk pricing, everything is designed to make your business run smoother.
+                  We focus on the operational details that matter most to business buyers: straightforward bulk order processing, accurate dispatch timelines, and responsive account support. From single carton orders to full pallet shipments, we keep your inventory moving without unexpected delays.
                 </p>
-                <Link href="/shop" className="btn btn--solid">Explore Our Products</Link>
+                <Link href="/shop" className="btn btn--solid">Explore Wholesale Catalog</Link>
               </div>
 
               <div className="about__img-wrap">

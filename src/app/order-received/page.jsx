@@ -12,7 +12,7 @@ export default function OrderReceivedPage() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('designpro_last_order');
+      const saved = localStorage.getItem('assemble_dist_last_order') || localStorage.getItem('designpro_last_order');
       if (saved) {
         setOrderDetails(JSON.parse(saved));
       }

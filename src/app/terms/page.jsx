@@ -103,8 +103,8 @@ export default function TermsPage() {
                 These Terms shall be governed by and construed in accordance with the laws of the United States. For questions regarding these Terms, please contact us at:
               </p>
               <div className="legal-contact-box">
-                <p><strong>Assemble Distribution Legal Team</strong></p>
-                <p>Email: <a href="mailto:support@designpro.com">support@designpro.com</a></p>
+                <p><strong>Assemble Distribution Support Team</strong></p>
+                <p>Email: <a href="mailto:support@assembledistribution.com">support@assembledistribution.com</a></p>
                 <p>Phone: +1 (800) 555-0192</p>
               </div>
             </div>

@@ -140,7 +140,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="info-label">Email</h4>
-                    <p className="info-text">support@designpro.com<br />sales@designpro.com</p>
+                    <p className="info-text">support@assembledistribution.com<br />sales@assembledistribution.com</p>
                   </div>
                 </div>
 

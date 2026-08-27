@@ -103,7 +103,7 @@ export default function ProductCard({ product }) {
           </div>
 
           <p className="p-desc">
-            {product.shortDescription || (product.description ? (product.description.length > 55 ? product.description.substring(0, 55) + '...' : product.description) : (product.brand || 'Premium Quality'))}
+            {product.shortDescription || (product.description ? (product.description.length > 55 ? product.description.substring(0, 55) + '...' : product.description) : (product.brand || 'In Stock'))}
           </p>
 
           <div className="p-options">

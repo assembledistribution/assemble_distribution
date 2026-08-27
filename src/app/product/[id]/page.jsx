@@ -215,7 +215,7 @@ export default function ProductDetailPage() {
               </div>
 
               <div className="product-short-description">
-                {product.shortDescription || (product.description ? (product.description.length > 140 ? product.description.substring(0, 140) + '...' : product.description) : 'Premium quality craftsmanship with modern design.')}
+                {product.shortDescription || (product.description ? (product.description.length > 140 ? product.description.substring(0, 140) + '...' : product.description) : (product.brand ? `${product.brand} wholesale product.` : 'Commercial wholesale product.'))}
               </div>
 
               {/* Size Selector */}
@@ -329,9 +329,9 @@ export default function ProductDetailPage() {
 
           {/* Description Section */}
           <div className="product-description-section">
-            <h3 className="section-title">Product Details & Description</h3>
+            <h3 className="section-title">Product Details &amp; Description</h3>
             <div className="description-content">
-              {product.description || 'This is a premium quality product designed with attention to detail. Experience the best in class performance and style with this exclusive item.'}
+              {product.description || 'Authentic wholesale product sourced directly from certified brand manufacturers. Contact our sales team for custom carton specifications or bulk freight quotes.'}
             </div>
           </div>
         </div>

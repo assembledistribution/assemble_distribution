@@ -143,7 +143,7 @@ export default function CheckoutPage() {
       };
 
       try {
-        localStorage.setItem('designpro_last_order', JSON.stringify(details));
+        localStorage.setItem('assemble_dist_last_order', JSON.stringify(details));
       } catch (err) {
         console.error('Failed to save order:', err);
       }

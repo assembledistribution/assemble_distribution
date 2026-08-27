@@ -49,7 +49,7 @@ export default function Footer() {
         <div>
           <h3 className="footer__col-title">Contact</h3>
           <ul className="footer__links">
-            <li><a href="mailto:support@designpro.com" id="footer-link-email">support@designpro.com</a></li>
+            <li><a href="mailto:support@assembledistribution.com" id="footer-link-email">support@assembledistribution.com</a></li>
             <li><a href="tel:+18005550192" id="footer-link-phone">+1 (800) 555-0192</a></li>
             <li><a href="#" id="footer-link-instagram">Instagram</a></li>
             <li><a href="#" id="footer-link-linkedin">LinkedIn</a></li>

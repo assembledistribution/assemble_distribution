@@ -34,12 +34,11 @@ export default function Gallery() {
       <div className="container">
         <div className="section-intro">
           <div className="section-intro__left">
-            <span className="eyebrow">Portfolio</span>
-            <h2 className="section-h2" id="gallery-heading">Design Gallery</h2>
+            <span className="eyebrow">Logistics &amp; Facilities</span>
+            <h2 className="section-h2" id="gallery-heading">Operations &amp; Warehousing</h2>
           </div>
           <p className="section-intro__right">
-            Browse a curated selection of our most celebrated projects — each one a
-            unique expression of style, craftsmanship, and thoughtful living.
+            A look inside our central fulfillment hubs, organized product storage, and high-efficiency freight packaging facilities.
           </p>
         </div>
 

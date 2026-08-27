@@ -12,7 +12,7 @@ export default function About() {
             <img
               className="about__img"
               src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb3?w=900&q=85&auto=format&fit=crop"
-              alt="Elegant interior dining room showcasing Luxor's design philosophy"
+              alt="Assemble Distribution warehouse and logistics team"
               loading="lazy"
             />
           </div>
@@ -21,25 +21,24 @@ export default function About() {
           <div className="about__text">
             <span className="eyebrow">About Us</span>
             <h2 className="about__h2" id="about-heading">
-              Turning Houses into Homes,<br />One Design at a Time
+              Direct Wholesale Sourcing,<br />Dependable Distribution
             </h2>
             <p className="about__p">
-              At Luxor, we believe every space tells a story. Our team of passionate
-              designers and architects brings together decades of expertise to create
-              interiors that are as functional as they are beautiful.
+              At Assemble Distribution, we supply retail stores, e-commerce businesses,
+              and commercial partners with verified inventory across top product categories.
+              We work directly with manufacturers to ensure consistent stock and reliable wholesale pricing.
             </p>
             <p className="about__p">
-              From the first consultation to the final reveal, we guide you through
-              every decision — ensuring your home reflects who you are and how you
-              live. Our warm, neutral aesthetic is rooted in timeless design principles
-              that endure long after trends have faded.
+              From automated order processing to freight fulfillment, we make bulk purchasing
+              straightforward and dependable. Our team manages inventory quality and dispatch
+              schedules so your business stays stocked without supply chain surprises.
             </p>
             <button
               className="btn btn--solid"
               id="about-learn-more-btn"
-              onClick={() => document.getElementById('services').scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Learn More ↗
+              Explore Catalog ↗
             </button>
           </div>
         </div>

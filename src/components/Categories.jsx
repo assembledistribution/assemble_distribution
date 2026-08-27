@@ -124,7 +124,7 @@ export default function Categories() {
 
           <div className="cat-header-nav">
             <p className="section-intro__right desktop-desc">
-              From creative art supplies, exciting toys, to everything you need for the outdoors — browse our wide range of wholesale product categories.
+              Explore our full catalog of wholesale categories with verified inventory and direct manufacturer pricing.
             </p>
             {/* Left / Right Arrow Slider Controls */}
             <div className="slider-nav-btns">

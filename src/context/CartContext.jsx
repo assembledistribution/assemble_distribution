@@ -7,25 +7,28 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
-  const [hasInitialized, setHasInitialized] = useState(false);
   const { showToast } = useToast();
 
   // Initialize cart items from localStorage on mount (client-only)
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('designpro_cart');
+      const saved = localStorage.getItem('assemble_dist_cart') || localStorage.getItem('designpro_cart');
       if (saved) {
         setCartItems(JSON.parse(saved));
       }
-    } catch (e) { /* ignore corrupted data */ }
-    setHasInitialized(true);
+    } catch (e) {
+      console.error('Failed to load cart from localStorage:', e);
+    }
   }, []);
 
+  // Save cart to localStorage on change
   useEffect(() => {
-    if (hasInitialized) {
-      localStorage.setItem('designpro_cart', JSON.stringify(cartItems));
+    try {
+      localStorage.setItem('assemble_dist_cart', JSON.stringify(cartItems));
+    } catch (e) {
+      console.error('Failed to save cart to localStorage:', e);
     }
-  }, [cartItems, hasInitialized]);
+  }, [cartItems]);
 
   const addToCart = (product, selectedSize, selectedVariation, quantity = 1, price = null) => {
     if (!product) return;

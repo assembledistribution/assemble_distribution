@@ -96,7 +96,7 @@ export default function PrivacyPage() {
               </p>
               <div className="legal-contact-box">
                 <p><strong>Assemble Distribution Privacy Office</strong></p>
-                <p>Email: <a href="mailto:privacy@designpro.com">privacy@designpro.com</a></p>
+                <p>Email: <a href="mailto:privacy@assembledistribution.com">privacy@assembledistribution.com</a></p>
                 <p>Phone: +1 (800) 555-0192</p>
               </div>
             </div>
