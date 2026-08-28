@@ -1,0 +1,52 @@
+# Assemble Distribution
+
+> Trusted USA wholesale distributor and B2B supply partner. Connecting retailers, e-commerce stores, and businesses with verified manufacturers for bulk merchandise at wholesale pricing.
+
+## About
+
+Assemble Distribution is a premier B2B wholesale distributor based in New York, USA. We supply retailers, department stores, online sellers, and regional shops with high-demand wholesale inventory sourced directly from certified manufacturers. We offer fast nationwide freight delivery, volume-based tier pricing, and responsive account support — from single carton orders to full pallet shipments.
+
+- **Industry**: Wholesale Distribution / B2B Supply
+- **Location**: New York, NY, United States
+- **Currency**: USD
+- **Payment Methods**: Wire Transfer, Credit Card, Net 30 Terms
+- **Business Hours**: Monday–Friday, 9:00 AM – 5:00 PM EST
+
+## Product Categories
+
+We distribute wholesale products across the following categories:
+
+- **Art, Craft and Sewing**: Paints, brushes, sewing tools, craft supplies
+- **Toys and Games**: Toys and games for all ages
+- **Garden and Outdoor**: Garden tools, outdoor equipment, plants
+- **Office Products**: Stationery, desk organization, office supplies
+- **Home and Kitchen**: Home décor, kitchenware, cookware
+- **Health and Household**: Health, wellness, and household essentials
+- **Tools and Home Improvement**: Hardware tools, home improvement supplies
+- **Sports and Outdoors**: Sports equipment, fitness gear, outdoor activities
+- **Industrial and Scientific**: Industrial equipment, scientific instruments
+- **Automotive Parts and Accessories**: Car parts, accessories, maintenance supplies
+- **Pet Supplies**: Pet food, toys, grooming, and accessories
+
+## Website Pages
+
+- [Home](https://www.assembledistribution.com/): Featured products, new arrivals, hot sales, brand partners, and FAQ
+- [Shop — All Products](https://www.assembledistribution.com/shop): Full wholesale catalog with search and filtering
+- [Shop by Category](https://www.assembledistribution.com/shop/art-craft): Browse products by specific category (art-craft, toys-games, garden-outdoor, office-products, home-kitchen, health-household, tools-home-improvement, sports-outdoors, industrial-scientific, automotive-parts-accessories, pet-supplies)
+- [Product Detail](https://www.assembledistribution.com/product/[id]): Individual product pages with pricing, sizes, variations, and images
+- [Distributor Signup](https://www.assembledistribution.com/distributor-signup): Apply to become a wholesale distributor/reseller partner
+- [About Us](https://www.assembledistribution.com/about): Company story, mission, and key business metrics
+- [Contact](https://www.assembledistribution.com/contact): Contact form, business address, phone, email, and office hours
+- [Privacy Policy](https://www.assembledistribution.com/privacy): Data collection, usage, and protection policies
+- [Terms & Conditions](https://www.assembledistribution.com/terms): Terms of service for wholesale orders
+
+## API
+
+- Product catalog API: `https://assemble-distribution-beckend.vercel.app/api/products`
+- Individual product: `https://assemble-distribution-beckend.vercel.app/api/products/[id]`
+
+
+## Optional
+
+- [Sitemap](https://www.assembledistribution.com/sitemap.xml)
+- [Robots.txt](https://www.assembledistribution.com/robots.txt)
