@@ -114,14 +114,14 @@ router.post('/url', async (req, res) => {
 
     targetUrl = targetUrl.trim();
 
-    // Clean Amazon thumbnail URLs to fetch full HD 1500px images
+    // Clean Amazon thumbnail URLs to fetch original full HD master image
     if (targetUrl.includes('amazon.com/images') || targetUrl.includes('media-amazon.com')) {
-      targetUrl = targetUrl.replace(/\._[A-Z0-9_,]+_\./gi, '._AC_SL1500_.');
+      targetUrl = targetUrl.replace(/\._[A-Z0-9_,-]+_\./gi, '.');
     }
 
     const result = await cloudinary.uploader.upload(targetUrl, {
       folder: 'products',
-      resource_type: 'auto',
+      resource_type: 'image',
       quality: 'auto:best',
     });
 

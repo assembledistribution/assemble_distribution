@@ -14,11 +14,16 @@ export const getApiUrl = () => {
 export const getHighResImageUrl = (url) => {
   if (!url || typeof url !== 'string') return url;
   
-  // Clean Amazon image links
+  // Clean Amazon image links to fetch original full HD master image
   if (url.includes('amazon.com/images') || url.includes('media-amazon.com')) {
-    // Strip Amazon low-res thumbnail modifiers (e.g., ._AC_UL320_, ._AC_SR160,160_, ._SL75_, ._SX300_)
-    // and replace with ._AC_SL1500_. for full HD resolution
-    return url.replace(/\._[A-Z0-9_,]+_\./gi, '._AC_SL1500_.');
+    // Strip Amazon low-res thumbnail modifiers (e.g. ._AC_UL320_., ._AC_SR160,160_., ._SL75_., ._SX300_., ._AC_SL1500_.)
+    // Stripping the modifier completely returns Amazon's full-res master image (e.g. /images/I/XXXX.jpg)
+    return url.replace(/\._[A-Z0-9_,-]+_\./gi, '.');
+  }
+
+  // Clean Cloudinary downscaling transformations if present
+  if (url.includes('cloudinary.com') && url.includes('/upload/')) {
+    return url.replace(/\/upload\/(?:c_[^/]+,)?(?:w_\d+,)?(?:h_\d+,)?/, '/upload/q_auto:best,f_auto/');
   }
 
   return url;

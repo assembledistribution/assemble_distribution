@@ -20,12 +20,12 @@ const uploadToCloudinaryIfExternal = async (url) => {
   try {
     let targetUrl = trimmed;
     if (targetUrl.includes('amazon.com/images') || targetUrl.includes('media-amazon.com')) {
-      targetUrl = targetUrl.replace(/\._[A-Z0-9_,]+_\./gi, '._AC_SL1500_.');
+      targetUrl = targetUrl.replace(/\._[A-Z0-9_,-]+_\./gi, '.');
     }
 
     const result = await cloudinary.uploader.upload(targetUrl, {
       folder: 'products',
-      resource_type: 'auto',
+      resource_type: 'image',
       quality: 'auto:best'
     });
 
@@ -119,7 +119,7 @@ export const updateProduct = async (req, res) => {
       product.description = description !== undefined ? description : product.description;
       product.shortDescription = shortDescription !== undefined ? shortDescription : product.shortDescription;
       product.price = price !== undefined ? price : product.price;
-      
+
       if (imageUrl !== undefined) {
         product.imageUrl = await uploadToCloudinaryIfExternal(imageUrl);
       }
