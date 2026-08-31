@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Logo from '@/components/Logo';
+
 import { Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
@@ -14,7 +14,19 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div className="footer-col footer-col--brand">
             <div className="footer-logo-wrap">
-              <Logo height={40} light={true} />
+              <img
+                src="/Assembledistribution_final_footer.png"
+                alt="Assemble Distribution Logo"
+                style={{
+                  height: '56px',
+                  width: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                  imageRendering: '-webkit-optimize-contrast',
+                  backfaceVisibility: 'hidden',
+                  transform: 'translateZ(0)',
+                }}
+              />
             </div>
             <p className="footer-brand-tagline">
               Your trusted wholesale partner. Supplying premium products to businesses worldwide with transparency, quality assurance, and fast freight fulfillment.

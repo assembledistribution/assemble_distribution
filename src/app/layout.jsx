@@ -91,7 +91,7 @@ const jsonLdWholesale = {
   '@id': `${SITE_URL}/#organization`,
   name: 'Assemble Distribution',
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.svg`,
+  logo: `${SITE_URL}/Assemble-distribution (1).png`,
   description:
     'Premier B2B wholesale distributor in the United States supplying retailers, department stores, and e-commerce merchants with quality merchandise.',
   telephone: '+1-800-555-0192',
@@ -157,9 +157,9 @@ const jsonLdWebsite = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en-US" className={poppins.variable}>
+    <html lang="en-US" className={poppins.variable} suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {/* Favicon is auto-detected from src/app/icon.png by Next.js */}
         {/* USA Geographic & Location Meta Tags */}
         <meta name="geo.region" content="US-NY" />
         <meta name="geo.placename" content="New York" />

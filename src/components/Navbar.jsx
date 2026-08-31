@@ -116,7 +116,7 @@ export default function Navbar() {
 
         {/* ── Logo ── */}
         <Link href="/" className="navbar__logo" aria-label="Assemble Distribution home" id="navbar-logo">
-          <Logo height={46} />
+          <Logo height={65} />
         </Link>
 
         {/* ── Center: Nav Links pill (desktop) ── */}
