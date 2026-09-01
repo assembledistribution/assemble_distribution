@@ -4,7 +4,7 @@ export default function Logo({ height = 46, light = false, className = '' }) {
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
-      src="/Assemble-distribution (1).png"
+      src="/Logo_Final.png"
       alt="Assemble Distribution Logo"
       width={Math.round(height * 3.5)}
       height={height}

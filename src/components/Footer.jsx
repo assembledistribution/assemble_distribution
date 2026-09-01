@@ -15,7 +15,7 @@ export default function Footer() {
           <div className="footer-col footer-col--brand">
             <div className="footer-logo-wrap">
               <img
-                src="/Assembledistribution_final_footer.png"
+                src="/Logo_Final Footer.png"
                 alt="Assemble Distribution Logo"
                 style={{
                   height: '56px',
