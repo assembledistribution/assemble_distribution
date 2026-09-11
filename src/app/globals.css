@@ -721,7 +721,9 @@ button {
 .navbar__mobile-chevron {
   font-size: 12px;
   transition: transform 0.25s ease;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar__mobile-chevron--open {

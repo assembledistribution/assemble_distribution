@@ -14,7 +14,7 @@ export default function FavoritesPage() {
   return (
     <>
       <Navbar />
-      <main className="section container" style={{ minHeight: '65vh', paddingBottom: '80px' }}>
+      <main className="section container" style={{ minHeight: '65vh', paddingBottom: '80px', paddingLeft: 'clamp(20px, 5vw, 40px)', paddingRight: 'clamp(20px, 5vw, 40px)' }}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
