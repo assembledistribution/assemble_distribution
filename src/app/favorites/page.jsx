@@ -45,6 +45,9 @@ export default function FavoritesPage() {
                   fontWeight: '700', 
                   backgroundColor: '#fee2e2', 
                   color: '#ef4444', 
+                  WebkitTextFillColor: '#ef4444',
+                  backgroundClip: 'initial',
+                  WebkitBackgroundClip: 'initial',
                   padding: '4px 12px', 
                   borderRadius: '20px'
                 }}>

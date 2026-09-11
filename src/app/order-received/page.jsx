@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { CheckCircle2, ShoppingBag } from 'lucide-react';
+import { CheckCircle2, ShoppingBag, Phone, Mail } from 'lucide-react';
 
 export default function OrderReceivedPage() {
   const [orderDetails, setOrderDetails] = useState(null);
@@ -144,8 +144,8 @@ export default function OrderReceivedPage() {
                 {orderDetails.billing?.streetAddress2 && <p>{orderDetails.billing.streetAddress2}</p>}
                 <p>{orderDetails.billing?.city}, {orderDetails.billing?.state} {orderDetails.billing?.zip}</p>
                 <p>{orderDetails.billing?.country}</p>
-                <p style={{ marginTop: '8px' }}>📞 {orderDetails.billing?.phone}</p>
-                <p>✉️ {orderDetails.billing?.email}</p>
+                <p style={{ marginTop: '8px' }}><Phone size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> {orderDetails.billing?.phone}</p>
+                <p><Mail size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> {orderDetails.billing?.email}</p>
               </div>
 
               <div className="address-box">

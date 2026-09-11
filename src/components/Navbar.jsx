@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 
-import { ShoppingCart, Search, Heart, X, ArrowRight, Package } from 'lucide-react';
+import { ShoppingCart, Search, Heart, X, ArrowRight, Package, ArrowUpRight, ChevronDown } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { useProducts } from '@/context/ProductContext';
 
@@ -133,7 +133,7 @@ export default function Navbar() {
               aria-haspopup="true"
               id="nav-shop"
             >
-              Shop ▾
+              Shop <ChevronDown size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '2px' }} />
             </button>
 
             {shopOpen && (
@@ -176,7 +176,7 @@ export default function Navbar() {
               <span className="navbar__cta-bg-inner"></span>
             </span>
             <span className="navbar__cta-txt-default">Sign Up For Distributor</span>
-            <span className="navbar__cta-txt-hover">Apply Now ↗</span>
+            <span className="navbar__cta-txt-hover">Apply Now <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
           </Link>
 
           <div style={{ position: 'relative' }} ref={searchRef}>
@@ -481,7 +481,7 @@ export default function Navbar() {
             id="mobile-shop"
           >
             Shop
-            <span className={`navbar__mobile-chevron ${mobileShopOpen ? 'navbar__mobile-chevron--open' : ''}`}>▾</span>
+            <span className={`navbar__mobile-chevron ${mobileShopOpen ? 'navbar__mobile-chevron--open' : ''}`}><ChevronDown size={14} /></span>
           </button>
           {mobileShopOpen && (
             <div className="navbar__mobile-sub">
@@ -552,7 +552,7 @@ export default function Navbar() {
             <span className="navbar__cta-bg-inner"></span>
           </span>
           <span className="navbar__cta-txt-default">Sign Up For Distributor</span>
-          <span className="navbar__cta-txt-hover">Apply Now ↗</span>
+          <span className="navbar__cta-txt-hover">Apply Now <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
         </Link>
       </div>
     </nav>

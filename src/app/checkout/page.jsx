@@ -19,7 +19,9 @@ import {
   Loader2,
   ShieldCheck,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Phone,
+  Mail
 } from 'lucide-react';
 
 const usStates = [
@@ -239,8 +241,8 @@ export default function CheckoutPage() {
                   {orderDetails.billing.streetAddress2 && <p>{orderDetails.billing.streetAddress2}</p>}
                   <p>{orderDetails.billing.city}, {orderDetails.billing.state} {orderDetails.billing.zip}</p>
                   <p>{orderDetails.billing.country}</p>
-                  <p style={{ marginTop: '8px' }}>📞 {orderDetails.billing.phone}</p>
-                  <p>✉️ {orderDetails.billing.email}</p>
+                  <p style={{ marginTop: '8px' }}><Phone size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> {orderDetails.billing.phone}</p>
+                  <p><Mail size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> {orderDetails.billing.email}</p>
                 </div>
 
                 <div className="address-box">

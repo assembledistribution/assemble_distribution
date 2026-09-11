@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function CTABanner() {
   return (
@@ -26,11 +27,11 @@ export default function CTABanner() {
               <span className="btn__slide-bg" aria-hidden="true">
                 <span className="btn__slide-bg-inner"></span>
               </span>
-              <span className="btn__slide-txt-default">Sign Up For Distributor ↗</span>
-              <span className="btn__slide-txt-hover">Apply Now ↗</span>
+              <span className="btn__slide-txt-default">Sign Up For Distributor <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
+              <span className="btn__slide-txt-hover">Apply Now <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
             </Link>
             <Link href="/contact" className="btn btn--outline" id="cta-contact-btn">
-              Call us: +1 (800) 555-0192 ↗
+              Call us: +1 (800) 555-0192 <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} />
             </Link>
           </div>
         </div>

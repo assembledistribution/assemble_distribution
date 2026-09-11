@@ -138,7 +138,7 @@ export default function ProductCard({ product }) {
             }
           }}
         >
-          <span className="price">{added ? '✓ Added!' : actionText}</span>
+          <span className="price">{added ? <><Check size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> Added!</> : actionText}</span>
           <span className="add-to-cart">
             <span className="txt">
               {added ? (

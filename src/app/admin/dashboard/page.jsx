@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { 
   LogOut, Package, Plus, Trash2, Home, Edit2, Search, 
-  CheckCircle, AlertTriangle, ShieldCheck, Eye, RefreshCw, Layers, ArrowLeft
+  CheckCircle, AlertTriangle, ShieldCheck, Eye, RefreshCw, Layers, ArrowLeft,
+  Sparkles, Flame, Lightbulb, Star, ChevronLeft, ChevronRight, Check
 } from 'lucide-react';
 
 function DashboardContent() {
@@ -296,7 +297,7 @@ function DashboardContent() {
     const result = await updateProduct(prodId, updatePayload);
     if (result?.success) {
       const label = field === 'isNewArrival' ? 'New Arrivals' : 'Hot Sales & Demand';
-      showNotification(newValue ? `✨ Added to ${label} slider!` : `Removed from ${label} slider.`);
+      showNotification(newValue ? `Added to ${label} slider!` : `Removed from ${label} slider.`);
     } else {
       showNotification('Failed to update product placement in MongoDB', 'error');
     }
@@ -964,7 +965,7 @@ function DashboardContent() {
                                   width: 'fit-content'
                                 }}
                               >
-                                <span>{product.isNewArrival ? '✓ ✨ New Arrival' : '+ ✨ New Arrival'}</span>
+                                <span>{product.isNewArrival ? <><Check size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> <Sparkles size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> New Arrival</> : <><Plus size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> <Sparkles size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> New Arrival</>}</span>
                               </button>
 
                               <button
@@ -987,7 +988,7 @@ function DashboardContent() {
                                   width: 'fit-content'
                                 }}
                               >
-                                <span>{product.isHotSale ? '✓ 🔥 Hot Sale' : '+ 🔥 Hot Sale'}</span>
+                                <span>{product.isHotSale ? <><Check size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> <Flame size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> Hot Sale</> : <><Plus size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> <Flame size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> Hot Sale</>}</span>
                               </button>
                             </div>
                           </td>
@@ -1208,7 +1209,7 @@ function DashboardContent() {
                     />
                     <div>
                       <span style={{ display: 'block', fontWeight: '700', fontSize: '14px', color: 'var(--ink, #1C1C1C)' }}>
-                        ✨ New Arrivals Slider
+                        <Sparkles size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> New Arrivals Slider
                       </span>
                       <span style={{ fontSize: '12px', color: 'var(--gray, #6B6F6E)', marginTop: '2px', display: 'block' }}>
                         Feature in top New Arrivals 10-product carousel
@@ -1236,7 +1237,7 @@ function DashboardContent() {
                     />
                     <div>
                       <span style={{ display: 'block', fontWeight: '700', fontSize: '14px', color: 'var(--ink, #1C1C1C)' }}>
-                        🔥 Hot Sales & Top Demand Slider
+                        <Flame size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> Hot Sales & Top Demand Slider
                       </span>
                       <span style={{ fontSize: '12px', color: 'var(--gray, #6B6F6E)', marginTop: '2px', display: 'block' }}>
                         Feature in High Demand carousel below Trusted Brands
@@ -1331,7 +1332,7 @@ function DashboardContent() {
                           Product Image Gallery ({newProduct.images.length} photos):
                         </label>
                         <span style={{ fontSize: '11px', color: 'var(--teal, #1C5C53)', fontWeight: '600', backgroundColor: '#e6f2f0', padding: '3px 10px', borderRadius: '12px' }}>
-                          💡 Drag cards or click ◄ ► arrows to reorder photo lineup
+                          <Lightbulb size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} /> Drag cards or click <ChevronLeft size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> <ChevronRight size={12} style={{ display: 'inline', verticalAlign: 'middle' }} /> arrows to reorder photo lineup
                         </span>
                       </div>
                       
@@ -1470,7 +1471,7 @@ function DashboardContent() {
                                   }}
                                   title="Set as main cover image"
                                 >
-                                  {isMainCover ? '★ Cover' : 'Set Cover'}
+                                  {isMainCover ? <><Star size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '3px' }} /> Cover</> : 'Set Cover'}
                                 </button>
 
                                 <button

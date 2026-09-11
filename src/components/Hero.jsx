@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -30,8 +31,8 @@ export default function Hero() {
             <span className="btn__slide-bg" aria-hidden="true">
               <span className="btn__slide-bg-inner"></span>
             </span>
-            <span className="btn__slide-txt-default">Shop Now ↗</span>
-            <span className="btn__slide-txt-hover">Explore Products →</span>
+            <span className="btn__slide-txt-default">Shop Now <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
+            <span className="btn__slide-txt-hover">Explore Products <ArrowRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
           </Link>
         </div>
       </div>

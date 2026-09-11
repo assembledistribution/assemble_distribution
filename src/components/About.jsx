@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function About() {
   return (
@@ -38,7 +39,7 @@ export default function About() {
               id="about-learn-more-btn"
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Explore Catalog ↗
+              Explore Catalog <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} />
             </button>
           </div>
         </div>
