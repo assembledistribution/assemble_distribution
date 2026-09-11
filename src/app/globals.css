@@ -659,7 +659,10 @@ button {
 }
 
 .navbar__mobile--open {
-  max-height: 600px;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 12px var(--side-pad) 24px;
 }
 
