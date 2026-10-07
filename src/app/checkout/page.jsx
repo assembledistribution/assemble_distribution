@@ -122,37 +122,115 @@ export default function CheckoutPage() {
 
   const router = useRouter();
 
-  // Final Order Submission
-  const handlePlaceOrder = (e) => {
+  // Final Order Submission (Sends via Resend API)
+  const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     const finalTotal = Math.max(0, cartTotal - discount);
     const orderId = `ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const selectedShipping = shipToDifferentAddress ? shipping : billing;
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      const details = {
-        orderId,
-        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-        billing,
-        shipping: shipToDifferentAddress ? shipping : billing,
-        items: [...cartItems],
-        subtotal: cartTotal,
-        discount,
-        total: finalTotal,
-        paymentMethod
-      };
+    const paymentMethodLabel =
+      paymentMethod === 'wire'
+        ? 'Wire Transfer'
+        : paymentMethod === 'card'
+        ? 'Credit Card'
+        : 'Invoice Net 30';
 
-      try {
-        localStorage.setItem('assemble_dist_last_order', JSON.stringify(details));
-      } catch (err) {
-        console.error('Failed to save order:', err);
+    const orderPayload = {
+      orderId,
+      orderDate,
+      billing,
+      shipping: selectedShipping,
+      items: cartItems.map(item => ({
+        title: item.title,
+        size: item.size || null,
+        quantity: item.quantity,
+        price: item.price
+      })),
+      subtotal: cartTotal,
+      discount,
+      total: finalTotal,
+      paymentMethod: paymentMethodLabel,
+    };
+
+    const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT || 'https://formspree.io/f/xyz';
+
+    // Format items list into clean text
+    const itemsSummary = cartItems
+      .map(item => `${item.title}${item.size ? ` (${item.size})` : ''} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`)
+      .join('\n');
+
+    // Format address
+    const fullShippingAddress = [
+      `${selectedShipping.firstName || ''} ${selectedShipping.lastName || ''}`.trim(),
+      selectedShipping.company,
+      selectedShipping.streetAddress1,
+      selectedShipping.streetAddress2,
+      [selectedShipping.city, selectedShipping.state, selectedShipping.zip].filter(Boolean).join(', '),
+      selectedShipping.country
+    ].filter(Boolean).join('\n');
+
+    const formspreePayload = {
+      _subject: `🚨 New Order: ${orderId} ($${finalTotal.toFixed(2)})`,
+      order_id: orderId,
+      order_date: orderDate,
+      total_amount: `$${finalTotal.toFixed(2)}`,
+      payment_method: paymentMethodLabel,
+      customer_name: `${billing.firstName || ''} ${billing.lastName || ''}`.trim(),
+      customer_email: billing.email,
+      customer_phone: billing.phone || 'N/A',
+      customer_company: billing.company || 'N/A',
+      shipping_address: fullShippingAddress,
+      ordered_items: itemsSummary,
+      subtotal: `$${cartTotal.toFixed(2)}`,
+      discount: discount > 0 ? `-$${discount.toFixed(2)}` : '$0.00'
+    };
+
+    // Send order confirmation via Formspree
+    try {
+      if (formspreeEndpoint && !formspreeEndpoint.includes('xyz')) {
+        await fetch(formspreeEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formspreePayload)
+        });
+        console.log('Order notification sent to Gmail via Formspree!');
       }
+    } catch (error) {
+      console.error('Failed to trigger Formspree order email:', error);
+    }
 
-      clearCart();
-      router.push('/order-received');
-    }, 1200);
+    const details = {
+      orderId,
+      date: orderDate,
+      billing,
+      shipping: selectedShipping,
+      items: [...cartItems],
+      subtotal: cartTotal,
+      discount,
+      total: finalTotal,
+      paymentMethod
+    };
+
+    try {
+      localStorage.setItem('assemble_dist_last_order', JSON.stringify(details));
+    } catch (err) {
+      console.error('Failed to save order:', err);
+    }
+
+    clearCart();
+    setIsSubmitting(false);
+    router.push('/order-received');
   };
 
   const finalTotal = Math.max(0, cartTotal - discount);
