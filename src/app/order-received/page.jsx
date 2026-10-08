@@ -66,9 +66,7 @@ export default function OrderReceivedPage() {
               <CheckCircle2 size={48} color="#1C5C53" />
             </div>
             <h1 className="success-title">Thank you. Your order has been received.</h1>
-            <p className="success-subtitle">
-              A confirmation email has been sent to <strong>{orderDetails.billing?.email || 'your email'}</strong>
-            </p>
+
 
             {/* Order Meta Bar */}
             <div className="order-meta-grid">
