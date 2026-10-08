@@ -95,6 +95,18 @@ export default function Footer() {
             © {new Date().getFullYear()} Assemble Distribution. All rights reserved.
           </p>
 
+          <p className="footer-credits">
+            Design &amp; Developed by{' '}
+            <a
+              href="https://www.ideasassemble.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-credit-link"
+            >
+              Ideas Assemble
+            </a>
+          </p>
+
           <div className="footer-legal-links">
             <Link href="/terms">Terms &amp; Conditions</Link>
             <span className="dot-sep">•</span>
@@ -229,6 +241,24 @@ export default function Footer() {
           font-size: 13px;
           color: rgba(255, 255, 255, 0.55);
           margin: 0;
+        }
+
+        .footer-credits {
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.55);
+          margin: 0;
+        }
+
+        .footer-credit-link {
+          color: #5eead4;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .footer-credit-link:hover {
+          color: #99f6e4;
+          text-decoration: underline;
         }
 
         .footer-legal-links {
