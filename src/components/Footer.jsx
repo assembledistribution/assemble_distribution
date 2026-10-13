@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Mail, Phone } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -73,16 +73,22 @@ export default function Footer() {
             <h3 className="footer-heading">Contact</h3>
             <ul className="footer-links-list footer-contact-list">
               <li>
-                <a href="mailto:support@assembledistribution.com" className="contact-item" id="footer-contact-email">
+                <a href="mailto:info@assembledistribution.com" className="contact-item" id="footer-contact-email">
                   <Mail size={16} className="contact-icon" style={{ marginRight: '10px', flexShrink: 0 }} />
-                  <span>support@assembledistribution.com</span>
+                  <span>info@assembledistribution.com</span>
                 </a>
               </li>
               <li>
-                <a href="tel:+18005550192" className="contact-item" id="footer-contact-phone">
+                <a href="tel:+14064792434" className="contact-item" id="footer-contact-phone">
                   <Phone size={16} className="contact-icon" style={{ marginRight: '10px', flexShrink: 0 }} />
-                  <span>+1 (800) 555-0192</span>
+                  <span>+1 406 479 2434</span>
                 </a>
+              </li>
+              <li>
+                <div className="contact-item" id="footer-contact-address">
+                  <MapPin size={16} className="contact-icon" style={{ marginRight: '10px', flexShrink: 0 }} />
+                  <span>1001 S MAIN ST 12963<br />KALISPELL MT 59901</span>
+                </div>
               </li>
             </ul>
           </div>

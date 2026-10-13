@@ -99,8 +99,9 @@ export default function PrivacyPage() {
               </p>
               <div className="legal-contact-box">
                 <p><strong>Assemble Distribution Privacy Office</strong></p>
-                <p>Email: <a href="mailto:privacy@assembledistribution.com">privacy@assembledistribution.com</a></p>
-                <p>Phone: +1 (800) 555-0192</p>
+                <p>Address: 1001 S MAIN ST 12963, KALISPELL MT 59901</p>
+                <p>Email: <a href="mailto:info@assembledistribution.com">info@assembledistribution.com</a></p>
+                <p>Phone: +1 406 479 2434</p>
               </div>
             </div>
 

@@ -94,20 +94,20 @@ const jsonLdWholesale = {
   logo: `${SITE_URL}/Assemble-distribution (1).png`,
   description:
     'Premier B2B wholesale distributor in the United States supplying retailers, department stores, and e-commerce merchants with quality merchandise.',
-  telephone: '+1-800-555-0192',
-  email: 'support@assembledistribution.com',
+  telephone: '+1 406 479 2434',
+  email: 'info@assembledistribution.com',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '123 Business Avenue, Suite 400',
-    addressLocality: 'New York',
-    addressRegion: 'NY',
-    postalCode: '10001',
+    streetAddress: '1001 S MAIN ST 12963',
+    addressLocality: 'Kalispell',
+    addressRegion: 'MT',
+    postalCode: '59901',
     addressCountry: 'US',
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 40.7128,
-    longitude: -74.006,
+    latitude: 48.1958,
+    longitude: -114.3129,
   },
   areaServed: [
     {
@@ -128,7 +128,7 @@ const jsonLdWholesale = {
   ],
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+1-800-555-0192',
+    telephone: '+1 406 479 2434',
     contactType: 'sales and customer service',
     areaServed: 'US',
     availableLanguage: ['English'],
@@ -161,10 +161,10 @@ export default function RootLayout({ children }) {
       <head>
         {/* Favicon is auto-detected from src/app/icon.png by Next.js */}
         {/* USA Geographic & Location Meta Tags */}
-        <meta name="geo.region" content="US-NY" />
-        <meta name="geo.placename" content="New York" />
-        <meta name="geo.position" content="40.7128;-74.0060" />
-        <meta name="ICBM" content="40.7128, -74.0060" />
+        <meta name="geo.region" content="US-MT" />
+        <meta name="geo.placename" content="Kalispell" />
+        <meta name="geo.position" content="48.1958;-114.3129" />
+        <meta name="ICBM" content="48.1958, -114.3129" />
         <meta name="target_country" content="US" />
         <meta name="coverage" content="United States" />
         <meta name="distribution" content="Global" />

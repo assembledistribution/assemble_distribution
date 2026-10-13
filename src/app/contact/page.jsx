@@ -120,7 +120,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="info-label">Address</h4>
-                    <p className="info-text">123 Business Avenue, Suite 400<br />New York, NY 10001</p>
+                    <p className="info-text">1001 S MAIN ST 12963<br />KALISPELL MT 59901</p>
                   </div>
                 </div>
 
@@ -130,7 +130,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="info-label">Phone</h4>
-                    <p className="info-text">+1 (555) 123-4567<br />Mon - Fri: 9:00 AM - 5:00 PM EST</p>
+                    <p className="info-text">+1 406 479 2434<br />Mon - Fri: 9:00 AM - 5:00 PM MST</p>
                   </div>
                 </div>
 
@@ -140,7 +140,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="info-label">Email</h4>
-                    <p className="info-text">support@assembledistribution.com<br />sales@assembledistribution.com</p>
+                    <p className="info-text"><a href="mailto:info@assembledistribution.com" style={{ color: 'inherit', textDecoration: 'none' }}>info@assembledistribution.com</a></p>
                   </div>
                 </div>
 

@@ -31,7 +31,7 @@ export default function CTABanner() {
               <span className="btn__slide-txt-hover">Apply Now <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} /></span>
             </Link>
             <Link href="/contact" className="btn btn--outline" id="cta-contact-btn">
-              Call us: +1 (800) 555-0192 <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} />
+              Call us: +1 406 479 2434 <ArrowUpRight size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }} />
             </Link>
           </div>
         </div>

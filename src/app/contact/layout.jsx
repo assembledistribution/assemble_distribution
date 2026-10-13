@@ -23,11 +23,11 @@ const jsonLdContact = {
   mainEntity: {
     '@type': 'Organization',
     name: 'Assemble Distribution',
-    telephone: '+1-800-555-0192',
-    email: 'support@assembledistribution.com',
+    telephone: '+1 406 479 2434',
+    email: 'info@assembledistribution.com',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+1-800-555-0192',
+      telephone: '+1 406 479 2434',
       contactType: 'customer support',
       areaServed: 'US',
       availableLanguage: 'English',
